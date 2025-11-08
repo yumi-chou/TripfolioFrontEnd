@@ -171,7 +171,7 @@ const createdScheduleId = ref(null);
 const isLoading = ref(false);
 
 const coverPreviewUrl = ref("");
-const defaultCover = "https://fakeimg.pl/800x400/?text=行程封面&font=noto";
+const defaultCover = `https://placehold.co/800x400?text=${encodeURIComponent('行程封面')}&font=noto`;
 
 const fileInput = ref(null);
 

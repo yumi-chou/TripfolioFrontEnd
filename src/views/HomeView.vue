@@ -15,8 +15,10 @@
         </div>
       </div>
       <div class="w-[100vw]">
-          <HomeCarousel/>
-          <div class="w-[60vw] mx-auto mt-20 z-10 relative">
+          <div class="mt-25 ml-4 mr-4 h-[600px] flex ">
+            <img :src="img1" alt="首圖" class="mx-auto w-full h-full object-cover rounded-[3rem]" loading="lazy" />
+          </div>
+          <!-- <div class="w-[60vw] mx-auto mt-20 z-10 relative">
             <section class="bg-gray-800/30 navbar-style backdrop-blur-[10px] text-white rounded-4xl py-3 px-6 shadow-md">
               <div
                 class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4"
@@ -122,7 +124,7 @@
                 </div>
               </div>
             </section>
-          </div>
+          </div> -->
       </div>
     </section>
 
@@ -229,13 +231,16 @@
       </div>
     </section>
 
-    <div class="w-full flex justify-center z-50 ">
-      <input
-        type="image"
-        :src="btn"
-        class="w-80 mt-25 mb-15 cursor-pointer "
-        @click="scrollToTop">
-    </div>
+
+      <RouterLink to="/schedule" class="flex justify-center mt-20 mb-25" >
+        <input
+          type="image"
+          :src="btn"
+          class="w-80 cursor-pointer"
+        />
+      </RouterLink>
+  
+
     <Footer />
 
     <!-- <section class="">
@@ -265,6 +270,7 @@ import { rawCategories, rawPlaceCategories } from "../constants/category";
 import { useCategoryMenu } from "../composable/useCategoryMenu";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import img1 from '@/assets/HomePage/1.png'
 import HomeCarousel from '../components/HomeCarousel.vue';
 import HomeSchedule from "../components/HomeSchedule.vue";
 import Footer from '../components/Footer.vue'; 

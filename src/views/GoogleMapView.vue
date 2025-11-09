@@ -14,27 +14,18 @@
       <select
         v-model="selectedCityName"
         @change="onCityChange($event)"
-        class="appearance-none navbar-style rounded-4xl text-sm py-1 pl-2 pr-3 focus:outline-none hover:bg-gray-400 transition duration-200 cursor-pointer shadow-inner"
+        class="appearance-none navbar-style rounded-4xl text-sm py-1 pl-2 pr-6 focus:outline-none hover:bg-gray-400 transition duration-200 cursor-pointer shadow-inner"
       >
         <option value="none">當前</option>
         <option v-for="city in cities" :key="city.name" :value="city.name">
           {{ city.name }}
         </option>
       </select>
-
-      <svg
-        class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-white pointer-events-none"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M19 9l-7 7-7-7"
-        />
-      </svg>
+    
+      <span class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/70">
+        ▼
+      </span>
+    
     </div>
     <div class="relative w-[150px]">
       <input
@@ -56,7 +47,7 @@
 
   <div ref="mapRef" class="w-screen h-screen m-0 p-0"></div>
   <button
-    class="absolute bottom-25 left-8 text-2xl w-12 h-12 rounded-full bg-gray-400/30 backdrop-blur-2xl hidden sm:block"
+    class="absolute bottom-25 left-8 text-2xl w-12 h-12 rounded-full bg-gray-400/30 backdrop-blur-2xl hidden sm:block hover:scale-125 transition-transform"
     @click="showCards = !showCards"
   >
     📌
@@ -69,7 +60,7 @@
       <div class="card-container-style relative rounded-2xl px-15 py-4">
         <button
           @click="scrollLeft"
-          class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow px-3 py-2 rounded-full"
+          class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white shadow px-3 py-2 rounded-full"
         >
           ‹
         </button>
@@ -114,7 +105,7 @@
 
         <button
           @click="scrollRight"
-          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow px-3 py-2 rounded-full"
+          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white shadow px-3 py-2 rounded-full"
         >
           ›
         </button>
@@ -169,17 +160,29 @@
       </div>
       <div class="mr-2.5">
         <h2
-          class="text-2xl text-white mb-3 mt-5 break-words max-w-[20rem] truncate"
+          class="text-2xl text-white mb-1 mt-5 break-words max-w-[20rem] truncate"
         >
           {{ selectedPlace.name }}
         </h2>
-        <p class="text-white text-sm mb-3">
+        <p class="text-white text-sm mb-2">
           {{ selectedPlace.formatted_address }}
         </p>
-        <p v-if="selectedPlace.rating" class="text-yellow-600 mb-3">
+        <p v-if="selectedPlace.rating" class="text-yellow-600 mb-1">
           ⭐ {{ selectedPlace.rating }}（共
           {{ selectedPlace.user_ratings_total }} 則評價）
         </p>
+        <ul v-if="selectedPlace?.current_opening_hours?.weekday_text?.length"
+            class="text-xs text-white/80">
+          <li v-for="line in selectedPlace.current_opening_hours.weekday_text" :key="line">
+            {{ line }}
+          </li>
+        </ul>
+            <ul v-else-if="selectedPlace?.opening_hours?.weekday_text?.length"
+            class="text-xs text-white/80">
+          <li v-for="line in selectedPlace.opening_hours.weekday_text" :key="line">
+            {{ line }}
+          </li>
+        </ul>
 
         <button
           @click="callItinerary"
@@ -325,7 +328,7 @@ function callItinerary() {
   const place = selectedPlace.value;
 
   if (!place || !date) {
-    alert("請選擇地點與日期");
+    alert("請先建立行程");
     return;
   }
 
@@ -542,8 +545,8 @@ function handleResults(results, status, pagination) {
         "user_ratings_total",
         // "formatted_phone_number",
         // "international_phone_number",
-        // "opening_hours",
-        // "current_opening_hours",
+        "opening_hours",
+        "current_opening_hours",
         // "secondary_opening_hours",
         "photos",
         // "reviews",
@@ -627,11 +630,11 @@ function calculateRoute(origin, destination) {
   );
 }
 
-function recalculateRoute() {
-  if (markers.length === 2) {
-    calculateRoute(markers[0].getPosition(), markers[1].getPosition());
-  }
-}
+// function recalculateRoute() {
+//   if (markers.length === 2) {
+//     calculateRoute(markers[0].getPosition(), markers[1].getPosition());
+//   }
+// }
 
 function onCityChange(event) {
   searchQuery.value = "";
@@ -804,64 +807,87 @@ onMounted(async () => {
         location: map.value.getCenter(),
       });
     }
-    map.value.addListener("click", (event) => {
-      markers.forEach((marker) => marker.setMap(null));
-      markers = [];
-      placeDetails.value = [];
-      nextPageFunc.value = null;
-      hasMoreResults.value = false;
+    // map.value.addListener("click", (event) => {
+    //   markers.forEach((marker) => marker.setMap(null));
+    //   markers = [];
+    //   placeDetails.value = [];
+    //   nextPageFunc.value = null;
+    //   hasMoreResults.value = false;
 
-      if (event.placeId) {
-        event.stop();
-        const placeId = event.placeId;
-        const detailRequest = {
-          placeId,
-          fields: [
-            "name",
-            "formatted_address",
-            "geometry",
-            "rating",
-            "user_ratings_total",
-            "photos",
-            "business_status",
-            "icon",
-          ],
-        };
+    //   if (event.placeId) {
+    //     event.stop();
+    //     const placeId = event.placeId;
+    //     const detailRequest = {
+    //       placeId,
+    //       fields: [
+    //         "name",
+    //         "formatted_address",
+    //         "geometry",
+    //         "rating",
+    //         "user_ratings_total",
+    //         "photos",
+    //         "business_status",
+    //         "icon",
+    //       ],
+    //     };
 
-        service.getDetails(detailRequest, (detailResult, detailStatus) => {
-          if (detailStatus === google.maps.places.PlacesServiceStatus.OK) {
-            if (selectedMarkers.length === 2) {
-              selectedMarkers.forEach((m) => m.setMap(null));
-              selectedMarkers.length = 0;
-              selectedPlace.value = null;
-              if (directionsRenderer)
-                directionsRenderer.setDirections({ routes: [] });
-            }
+    //     service.getDetails(detailRequest, (detailResult, detailStatus) => {
+    //       if (detailStatus === google.maps.places.PlacesServiceStatus.OK) {
+    //         if (selectedMarkers.length === 2) {
+    //           selectedMarkers.forEach((m) => m.setMap(null));
+    //           selectedMarkers.length = 0;
+    //           selectedPlace.value = null;
+    //           if (directionsRenderer)
+    //             directionsRenderer.setDirections({ routes: [] });
+    //         }
 
-            const marker = new google.maps.Marker({
-              position: detailResult.geometry.location,
-              map: map.value,
-              title: detailResult.name,
-            });
-            selectedMarkers.push(marker);
+    //         const marker = new google.maps.Marker({
+    //           position: detailResult.geometry.location,
+    //           map: map.value,
+    //           title: detailResult.name,
+    //         });
+    //         selectedMarkers.push(marker);
 
-            if (selectedMarkers.length === 1) {
-              selectedPlace.value = detailResult;
-            } else if (selectedMarkers.length === 2) {
-              selectedPlace.value = null;
-              calculateRoute(
-                selectedMarkers[0].getPosition(),
-                selectedMarkers[1].getPosition(),
-              );
-            }
-          } else {
-            alert("取得詳細資料失敗", detailStatus);
-          }
-        });
-      } else {
-        alert("點擊了非place地點");
-      }
-    });
+    //         if (selectedMarkers.length === 1) {
+    //           selectedPlace.value = detailResult;
+    //         } else if (selectedMarkers.length === 2) {
+    //           selectedPlace.value = null;
+    //           calculateRoute(
+    //             selectedMarkers[0].getPosition(),
+    //             selectedMarkers[1].getPosition(),
+    //           );
+    //         }
+    //       } else {
+    //         alert("取得詳細資料失敗", detailStatus);
+    //       }
+    //     });
+    //   } else {
+    //     alert("點擊了非place地點");
+    //   }
+    // });
+  map.value.addListener("click", (event) => {
+  if (!event.placeId) return;
+
+  event.stop(); 
+
+  const detailRequest = {
+    placeId: event.placeId,
+    fields: [
+      "name",
+      "formatted_address",
+      "geometry",
+      "rating",
+      "user_ratings_total",
+      "photos",
+    ],
+  };
+
+  service.getDetails(detailRequest, (detailResult, detailStatus) => {
+    if (detailStatus !== google.maps.places.PlacesServiceStatus.OK) return;
+    selectedPlace.value = detailResult;
+  });
+});
+
 
     mapClickListener = google.maps.event.addListener(
       map.value,

@@ -204,14 +204,23 @@
     >
       ⚙︎
     </button>
+    <div class="relative" v-for="item in categories" :key="item.type">
     <button
-      v-for="item in categories"
-      :key="item.type"
       @click="searchByCategory(item.type)"
-      class="block w-full text-left px-3 py-2 rounded hover:bg-blue-100"
+      class="block w-full text-left px-3 py-2 rounded hover:bg-blue-100 relative"
+      @mouseenter="hovered = item.type"
+      @mouseleave="hovered = null"
     >
       {{ item.label }}
     </button>
+
+    <div
+      v-if="hovered === item.type"
+      class="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-800 text-white text-sm rounded px-2 py-1 whitespace-nowrap shadow"
+    >
+      {{ item.name }}
+    </div>
+  </div>
 
     <div class="relative">
       <button
@@ -229,19 +238,32 @@
           @click="removeCategory(item)"
           v-for="item in categories"
           :key="item.type"
-          class="m-4"
+          class="m-4 cursor-pointer"
         >
           {{ item.label }} ❌
         </button>
         <hr />
-        <button
-          @click="addCategory(item)"
+        <div
           v-for="item in placeCategories"
           :key="item.type"
-          class="m-4 cursor-pointer"
+          class="relative inline-block m-4"
         >
-          {{ item.label }}
-        </button>
+          <button
+            @click="addCategory(item)"
+            class="cursor-pointer hover:bg-blue-100 rounded px-3 py-2"
+            @mouseenter="hovered = item.type"
+            @mouseleave="hovered = null"
+          >
+            {{ item.label }}
+          </button>
+
+          <div
+            v-show="hovered === item.type"
+            class="absolute left-1/2 top-full mt-1 -translate-x-1/2  bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow pointer-events-none"
+          >
+            {{ item.name }}
+          </div>
+        </div>
       </div>
     </div>
   </aside>
@@ -273,6 +295,7 @@ const selectedDate = computed(() => {
   return trip.value?.days?.[currentDayIndex.value] || null;
 });
 
+const hovered = ref(null);
 const route = useRoute();
 const router = useRouter();
 const isLocated = ref(false);
@@ -306,7 +329,7 @@ let mapClickListener = null;
 
 const travelMode = ref("DRIVING");
 const result = ref(null);
-const maxCategoryCount = 5;
+const maxCategoryCount = 4;
 const cardContainer = ref(null);
 
 //css
@@ -473,7 +496,7 @@ function moveToCity(event) {
           position.coords.longitude,
         );
         map.value.setCenter(center);
-        map.value.setZoom(15);
+        map.value.setZoom(12);
         performSearch({
           type: SearchType.NEARBY_TYPE,
           query: "tourist_attraction",
@@ -491,7 +514,7 @@ function moveToCity(event) {
 
   const center = new google.maps.LatLng(city.lat, city.lng);
   map.value.setCenter(center);
-  map.value.setZoom(13);
+  map.value.setZoom(12);
 
   performSearch({
     type: SearchType.CITY_DEFAULT,
@@ -508,7 +531,7 @@ function handleResults(results, status, pagination) {
 
   if (results[0]?.geometry?.location) {
     map.value.setCenter(results[0].geometry.location);
-    map.value.setZoom(15);
+    map.value.setZoom(12);
   }
 
   markers.forEach((marker) => marker.setMap(null));
@@ -529,6 +552,7 @@ function handleResults(results, status, pagination) {
       title: place.name,
       icon: {
         url: iconUrl,
+        scaledSize: new google.maps.Size(36, 36),
       },
     });
 
@@ -673,7 +697,7 @@ function locateUser() {
       });
 
       map.value.setCenter(userLocation);
-      map.value.setZoom(15);
+      map.value.setZoom(12);
       isLocated.value = true;
       if (searchQuery.value) {
         performSearch({
@@ -728,7 +752,7 @@ watch(
 
       center = new google.maps.LatLng(city.lat, city.lng);
       map.value.setCenter(center);
-      map.value.setZoom(13);
+      map.value.setZoom(12);
 
       performSearch({
         type: SearchType.TEXT,
@@ -756,7 +780,7 @@ onMounted(async () => {
     }
     map.value = new google.maps.Map(mapRef.value, {
       center: { lat: 25.038, lng: 121.5645 },
-      zoom: 12,
+      zoom: 11,
       mapTypeControl: false,
       mapTypeControlOptions: null,
       zoomControl: false,
@@ -792,7 +816,7 @@ onMounted(async () => {
       if (city) {
         const center = new google.maps.LatLng(city.lat, city.lng);
         map.value.setCenter(center);
-        map.value.setZoom(13);
+        map.value.setZoom(12);
         performSearch({
           type: SearchType.TEXT,
           query: queryText,

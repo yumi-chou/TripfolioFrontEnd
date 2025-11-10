@@ -3,7 +3,7 @@ import { ref } from "vue";
 export function useCategoryMenu(
   initialCategories = [],
   initialPlaceCategories = [],
-  maxCategoryCount = 5,
+  maxCategoryCount = 4,
 ) {
   const categories = ref([...initialCategories]);
   const placeCategories = ref([...initialPlaceCategories]);
@@ -14,7 +14,7 @@ export function useCategoryMenu(
     const exists = categories.value.some((cat) => cat.type === item.type);
     if (exists) return;
     if (categories.value.length >= maxCategoryCount) {
-      alert("已達上限，最多只能選擇 5 種類別");
+      alert("已達上限，最多只能選擇 4 種類別");
       return;
     }
     categories.value.push(item);

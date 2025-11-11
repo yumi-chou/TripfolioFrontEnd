@@ -496,7 +496,7 @@ function moveToCity(event) {
           position.coords.longitude,
         );
         map.value.setCenter(center);
-        map.value.setZoom(12);
+        map.value.setZoom(11);
         performSearch({
           type: SearchType.NEARBY_TYPE,
           query: "tourist_attraction",
@@ -514,7 +514,7 @@ function moveToCity(event) {
 
   const center = new google.maps.LatLng(city.lat, city.lng);
   map.value.setCenter(center);
-  map.value.setZoom(12);
+  map.value.setZoom(11);
 
   performSearch({
     type: SearchType.CITY_DEFAULT,
@@ -531,7 +531,7 @@ function handleResults(results, status, pagination) {
 
   if (results[0]?.geometry?.location) {
     map.value.setCenter(results[0].geometry.location);
-    map.value.setZoom(12);
+    map.value.setZoom(14);
   }
 
   markers.forEach((marker) => marker.setMap(null));
@@ -697,7 +697,7 @@ function locateUser() {
       });
 
       map.value.setCenter(userLocation);
-      map.value.setZoom(12);
+      map.value.setZoom(11);
       isLocated.value = true;
       if (searchQuery.value) {
         performSearch({
@@ -752,7 +752,7 @@ watch(
 
       center = new google.maps.LatLng(city.lat, city.lng);
       map.value.setCenter(center);
-      map.value.setZoom(12);
+      map.value.setZoom(11);
 
       performSearch({
         type: SearchType.TEXT,
@@ -780,7 +780,7 @@ onMounted(async () => {
     }
     map.value = new google.maps.Map(mapRef.value, {
       center: { lat: 25.038, lng: 121.5645 },
-      zoom: 11,
+      zoom: 12,
       mapTypeControl: false,
       mapTypeControlOptions: null,
       zoomControl: false,

@@ -48,14 +48,14 @@
         <div class="flex justify-center gap-6 mt-4">
 
           <!-- Google 註冊/登入按鈕 -->
-          <button
+          <!-- <button
             type="button"
             @click="handleGoogleLogin"
             class="p-[10px] border border-[#fff]  rounded-full  text-[14px] flex items-center justify-center gap-2 hover:bg-white/30 w-full"
           >
             <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5 "/>
             <span class="text-white px-0.5">使用 Google 註冊</span>
-          </button>
+          </button> -->
 
           <button
             type="submit"

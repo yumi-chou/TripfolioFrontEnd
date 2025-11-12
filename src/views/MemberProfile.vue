@@ -6,7 +6,7 @@
     <h2 class="text-2xl font-semibold text-center text-white">會員資料修改</h2>
 
     <!-- 頭像區塊 -->
-    <div class="flex justify-center">
+    <!-- <div class="flex justify-center">
       <div class="relative w-24 h-24">
         <img
           v-if="!showCropper && (previewUrl || profileData.avatar)"
@@ -29,7 +29,7 @@
           class="hidden"
         />
       </div>
-    </div>
+    </div> -->
 
     <!-- 裁切器 -->
     <div

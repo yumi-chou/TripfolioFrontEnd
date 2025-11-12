@@ -95,7 +95,7 @@ onMounted(async () => {
     );
     schedules.value = res.data.schedules;
   } catch {
-    alert("無法取得");
+    alert("請先登入");
   }
 });
 

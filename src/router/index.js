@@ -65,6 +65,7 @@ const routes = [
     path: "/community/post",
     name: "communityPost",
     component: () => import("@/components/PostForm.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/community",
@@ -102,6 +103,17 @@ const router = createRouter({
       // 對於其他所有新的路由導航，即時滾動到頂部
       return { top: 0 }
     }
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+
+  if (to.meta.requiresAuth && !token) {
+    alert('請先登入');
+    next('/login'); // 🚫 導回登入頁
+  } else {
+    next(); // ✅ 通過
   }
 });
 

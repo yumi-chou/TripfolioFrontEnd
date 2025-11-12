@@ -54,7 +54,7 @@
 
       <!-- 內容 -->
       <div>
-        <label class="block text-lg font-medium mb-2">貼文內容</label>
+        <label class="block text-lg font-medium mb-2">貼文內容（可選填）</label>
         <textarea
           v-model="content"
           rows="5"

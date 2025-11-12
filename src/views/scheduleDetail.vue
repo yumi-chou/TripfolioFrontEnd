@@ -104,7 +104,7 @@ const goBack = () => {
 const fetchTrip = async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${props.tripId}`,
       { headers: { Authorization: `Bearer ${token}` } },
     );
     const tripData = res.data;
@@ -135,7 +135,7 @@ const updateCover = async (blob) => {
 
   try {
     const res = await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${props.tripId}`,
       formData,
       { headers: { Authorization: `Bearer ${token}` } },
     );
@@ -152,7 +152,7 @@ const updateCover = async (blob) => {
 const updateTitle = async (newTitle) => {
   try {
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${props.tripId}`,
       { title: newTitle },
       { headers: { Authorization: `Bearer ${token}` } },
     );
@@ -165,7 +165,7 @@ const updateTitle = async (newTitle) => {
 const updateDates = async ({ startDate, endDate }) => {
   try {
     await axios.patch(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${props.tripId}`,
       { startDate, endDate },
       { headers: { Authorization: `Bearer ${token}` } },
     );
@@ -188,7 +188,7 @@ const updateDates = async ({ startDate, endDate }) => {
 const updateNotes = async (newNotes) => {
   try {
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${props.tripId}`,
       { description: newNotes },
       { headers: { Authorization: `Bearer ${token}` } },
     );

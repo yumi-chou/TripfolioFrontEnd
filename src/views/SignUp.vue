@@ -97,7 +97,7 @@ const errorMessages = ref([]);
 const showSuccess = ref(false);
 const successMessage = ref("");
 
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/signup`;
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/signup`;
 
 const clearText = () => {
   email.value = "";

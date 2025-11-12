@@ -202,7 +202,7 @@ const profileData = ref({
 //元件掛載時載入會員資料
 onMounted(async () => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -252,7 +252,7 @@ const saveAvatar = async () => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/profile/upload-avatar`,
+        `${import.meta.env.VITE_API_URL}/profile/upload-avatar`,
         formData,
         {
           headers: {
@@ -263,7 +263,7 @@ const saveAvatar = async () => {
       alert("大頭貼上傳成功");
 
       const profileRes = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/profile`,
+        `${import.meta.env.VITE_API_URL}/profile`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -302,7 +302,7 @@ watch(
 const saveProfile = async () => {
   try {
     const res = await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/profile`,
+      `${import.meta.env.VITE_API_URL}/profile`,
       profileData.value,
       {
         headers: {
@@ -376,7 +376,7 @@ const changePassword = async () => {
 
   try {
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/profile/users/password`,
+      `${import.meta.env.VITE_API_URL}/profile/users/password`,
       {
         oldPassword: passwordData.value.oldPassword,
         newPassword: passwordData.value.newPassword,

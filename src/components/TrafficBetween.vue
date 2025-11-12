@@ -94,7 +94,7 @@ async function getTravelInfo () {
     durationText.value = Math.round(rawDuration.value / 60) + ' 分'
     distanceText.value = (rawDistance.value / 1000).toFixed(1) + ' km'
 
-    await axios.delete(`${API_URL}/api/traffic/delete-traffic`, {
+    await axios.delete(`${API_URL}/traffic/delete-traffic`, {
       params: {
         itineraryId : props.itineraryId,
         fromPlaceId : props.fromPlaceId,
@@ -102,7 +102,7 @@ async function getTravelInfo () {
       }
     })
 
-    await axios.post(`${API_URL}/api/traffic/add-traffic`, {
+    await axios.post(`${API_URL}/traffic/add-traffic`, {
       itineraryId : props.itineraryId,
       fromPlaceId : props.fromPlaceId,
       toPlaceId   : props.toPlaceId,

@@ -248,7 +248,7 @@ const scheduleSubmit = async () => {
   try {
     isLoading.value = true;
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule`,
       formData,
       {
         headers: {

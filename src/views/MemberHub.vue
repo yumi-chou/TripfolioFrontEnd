@@ -111,20 +111,20 @@ const fetchData = async () => {
 
   try {
     const [userRes, travelRes, postRes, collectRes] = await Promise.all([
-      axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
+      axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      axios.get(`${import.meta.env.VITE_API_URL}/api/travelSchedule/user`, {
+      axios.get(`${import.meta.env.VITE_API_URL}/travelSchedule/user`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
       axios.get(
-        `${import.meta.env.VITE_API_URL}/api/allposts?page=1&limit=100`,
+        `${import.meta.env.VITE_API_URL}/allposts?page=1&limit=100`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       ),
       axios.get(
-        `${import.meta.env.VITE_API_URL}/api/favorites/user/${memberId}`,
+        `${import.meta.env.VITE_API_URL}/favorites/user/${memberId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

@@ -173,7 +173,7 @@ async function refresh() {
 
   try {
     // 直接向 API 請求最新資料
-    const res = await axios.get(`${API_URL}/api/itinerary/places`, {
+    const res = await axios.get(`${API_URL}/itinerary/places`, {
       params: {
         itineraryId: selectedTrip.value.id,
         date: currentDay.value.date,
@@ -247,7 +247,7 @@ function updateOrder() {
     placeOrder: i + 1,
   }));
   axios
-    .put(`${API_URL}/api/itinerary/places/reorder`, { places: newOrder })
+    .put(`${API_URL}/itinerary/places/reorder`, { places: newOrder })
     .then(() => {
       console.log("排序更新成功");
     })

@@ -37,7 +37,7 @@ const isLoading = ref(false);
 const checkFavoriteStatus = async () => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/favorites/check/${props.postId}/${props.memberId}`,
+      `${import.meta.env.VITE_API_URL}/favorites/check/${props.postId}/${props.memberId}`,
     );
     isFavorited.value = response.data.isFavorited;
 
@@ -53,7 +53,7 @@ const toggleFavorite = async () => {
   try {
     if (isFavorited.value) {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/favorites/${props.postId}`,
+        `${import.meta.env.VITE_API_URL}/favorites/${props.postId}`,
         {
           data: { memberId: props.memberId },
         },
@@ -68,7 +68,7 @@ const toggleFavorite = async () => {
       });
     } else {
       // 新增
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/favorites`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/favorites`, {
         postId: props.postId,
         memberId: props.memberId,
       });

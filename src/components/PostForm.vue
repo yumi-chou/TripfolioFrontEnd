@@ -88,7 +88,7 @@ const token = localStorage.getItem("token");
 onMounted(async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/user`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/user`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },
@@ -159,7 +159,7 @@ async function submitPost() {
 
   try {
     await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/community/community-posts`,
+      `${import.meta.env.VITE_API_URL}/community/community-posts`,
       formData,
       {
         headers: {

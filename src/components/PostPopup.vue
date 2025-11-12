@@ -121,7 +121,7 @@ const fetchScheduleTitle = async () => {
   if (props.post.title) {
     try {
       // const res = await axios.get(
-      //   `${import.meta.env.VITE_API_URL}/api/travelSchedule/${props.post.title}`,
+      //   `${import.meta.env.VITE_API_URL}/travelSchedule/${props.post.title}`,
       //   {
       //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       //   },
@@ -154,7 +154,7 @@ const refreshPost = async () => {
   try {
     // 嘗試獲取最新的貼文資訊
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/allposts/${props.post.postId}`,
+      `${import.meta.env.VITE_API_URL}/allposts/${props.post.postId}`,
     );
 
     // 通知父組件更新列表中顯示的計數

@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 dayjs.extend(isSameOrBefore);
 
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/travelSchedule`;
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/travelSchedule`;
 
 export function generateDaysArray(trip) {
   if (!trip || !trip.startDate || !trip.endDate) return [];

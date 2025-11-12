@@ -135,7 +135,7 @@ const setPermission = async (type) => {
 const generateShareUrl = async () => {
   try {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${props.tripId}`,
       {
         permission: permission.value,
       },
@@ -161,7 +161,7 @@ const copyToClipboard = async () => {
 const fetchMembers = async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${props.tripId}`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${props.tripId}`,
     );
     members.value = res.data.map((item) => ({
       token: item.token,
@@ -177,7 +177,7 @@ const fetchMembers = async () => {
 const changePermission = async (member) => {
   try {
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${member.token}`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${member.token}`,
       {
         permission: member.permission,
       },
@@ -191,7 +191,7 @@ const removeMember = async (member) => {
   if (!confirm(`確定要移除 ${member.name} 嗎？`)) return;
   try {
     await axios.delete(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${member.token}`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${member.token}`,
     );
     await fetchMembers();
   } catch (err) {

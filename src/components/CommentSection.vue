@@ -87,7 +87,7 @@ const submitComment = async (commentText) => {
   isSubmitting.value = true;
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/post/${props.post.postId}/comments`,
+      `${import.meta.env.VITE_API_URL}/post/${props.post.postId}/comments`,
       {
         content: commentText,
         memberId: getCurrentUserId(),
@@ -135,7 +135,7 @@ const loadComments = async () => {
     console.log(`正在載入貼文 ${props.post.postId} 的留言`);
 
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/post/${props.post.postId}/comments`,
+      `${import.meta.env.VITE_API_URL}/post/${props.post.postId}/comments`,
     );
     comments.value = response.data;
     console.log("載入留言成功:", response.data);
@@ -163,7 +163,7 @@ const deleteComment = async (commentId) => {
     console.log(`正在刪除留言 ${commentId}`);
 
     await axios.delete(
-      `${import.meta.env.VITE_API_URL}/api/post/${props.post.postId}/comments/${commentId}`,
+      `${import.meta.env.VITE_API_URL}/post/${props.post.postId}/comments/${commentId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

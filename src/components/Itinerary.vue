@@ -42,7 +42,7 @@ watch(selectedDate, () => {
 async function loadItinerary() {
   try {
     if (!tripId.value || !selectedDate.value) return;
-    const res = await axios.get(`${API_URL}/api/itinerary/places`, {
+    const res = await axios.get(`${API_URL}/itinerary/places`, {
       params: { itineraryId: tripId.value, date: selectedDate.value },
     });
     itineraryPlaces.value = res.data.places
@@ -103,7 +103,7 @@ async function confirmTime(p) {
   p.editingTime = false;
 
   try {
-    await axios.put(`${API_URL}/api/itineraryTime/places/${p.id}`, {
+    await axios.put(`${API_URL}/itineraryTime/places/${p.id}`, {
       arrivalHour: p.arrivalHour,
       arrivalMinute: p.arrivalMinute,
     });
@@ -119,7 +119,7 @@ async function updateOrder() {
     placeOrder: i + 1,
   }));
   try {
-    await axios.put(`${API_URL}/api/itinerary/places/reorder`, {
+    await axios.put(`${API_URL}/itinerary/places/reorder`, {
       places: newOrder,
     });
     await loadItinerary();
@@ -146,7 +146,7 @@ async function addPlace(place, date) {
   const lng = place.geometry?.location?.lng?.();
 
   try {
-    const res = await axios.post(`${API_URL}/api/itinerary/add-place`, {
+    const res = await axios.post(`${API_URL}/itinerary/add-place`, {
       itineraryId: tripId.value,
       date,
       name: place.name,
@@ -174,7 +174,7 @@ async function addPlace(place, date) {
 //移除景點
 async function removePlace(p) {
   try {
-    const res = await axios.delete(`${API_URL}/api/itinerary/place`, {
+    const res = await axios.delete(`${API_URL}/itinerary/place`, {
       params: { itineraryId: tripId.value, name: p.name },
     });
     if (res.data.success) {
@@ -193,7 +193,7 @@ async function removePlace(p) {
 //交通資料
 async function fetchTrafficData() {
   try {
-    const res = await axios.get(`${API_URL}/api/traffic/get-all-traffic`, {
+    const res = await axios.get(`${API_URL}/traffic/get-all-traffic`, {
       params: { itineraryId: tripId.value },
     });
     const map = {};

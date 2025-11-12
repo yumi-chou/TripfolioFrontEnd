@@ -139,7 +139,7 @@ const fetchIsPremium = async () => {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     isPremium.value = res.data.isPremium;
@@ -218,7 +218,7 @@ const deleteSchedule = async (id) => {
 
   try {
     await axios.delete(
-      `${import.meta.env.VITE_API_URL}/api/travelSchedule/${id}`,
+      `${import.meta.env.VITE_API_URL}/travelSchedule/${id}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       },

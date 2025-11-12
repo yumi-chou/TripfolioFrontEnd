@@ -115,7 +115,7 @@ const checkPremium = async () => {
     return;
   }
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/linepay/check-status`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/linepay/check-status`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     isPremium.value = res.data?.isPremium;
@@ -136,7 +136,7 @@ const handleLinePay = async () => {
   linePayLoading.value = true;
   try {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/linepay/request`,
+      `${import.meta.env.VITE_API_URL}/linepay/request`,
       {},
       {
         headers: {
@@ -167,7 +167,7 @@ const initDropin = async () => {
   }
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/payment/client_token`,
+      `${import.meta.env.VITE_API_URL}/payment/client_token`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -218,7 +218,7 @@ const submitBraintreePayment = async () => {
     const nonce = payload.nonce;
 
     const result = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/payment/confirm`,
+      `${import.meta.env.VITE_API_URL}/payment/confirm`,
       {
         paymentMethodNonce: nonce,
         amount: paymentAmount.value

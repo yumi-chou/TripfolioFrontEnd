@@ -51,7 +51,7 @@ const fetchPreferences = async () => {
     }
 
     const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/email-preferences/get`,
+      `${import.meta.env.VITE_API_URL}/email-preferences/get`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ const savePreferences = async () => {
     }
 
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/email-preferences/update`,
+      `${import.meta.env.VITE_API_URL}/email-preferences/update`,
       { preferences: preferences.value },
       {
         headers: {

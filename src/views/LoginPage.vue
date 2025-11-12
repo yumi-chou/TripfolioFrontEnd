@@ -117,7 +117,7 @@ const password = ref('');
 const isLoggedIn = ref(false);
 const showError = ref(false);
 const errorMessage = ref('');
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/login/`;
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/login/`;
 
 const clearText = () => {
   email.value = '';

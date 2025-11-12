@@ -48,7 +48,7 @@ const joined = ref(false);
 const fetchInviteInfo = async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${token}/inviteInfo`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${token}/inviteInfo`,
     );
     trip.value = res.data.trip;
     joined.value = res.data.alreadyJoined;
@@ -67,7 +67,7 @@ const fetchInviteInfo = async () => {
 const acceptShare = async () => {
   try {
     await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/trip-shares/${token}/accept`,
+      `${import.meta.env.VITE_API_URL}/trip-shares/${token}/accept`,
     );
     joined.value = true;
   } catch (err) {

@@ -17,7 +17,7 @@
           :src="computedCoverURL"
           :key="computedCoverURL"
           alt="行程封面"
-          class="w-full h-auto max-h-60 sm:max-h-80 object-cover rounded-xl"
+          class="w-full h-full object-cover rounded-t-xl"
         />
         <div
           v-else

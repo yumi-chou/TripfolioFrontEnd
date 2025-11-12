@@ -27,7 +27,7 @@
           <button
             v-if="canDeleteComment(comment)"
             @click="deleteComment(comment.id)"
-            class="delete-btn"
+            class="delete-btn cursor-pointer"
             :disabled="isDeletingComment === comment.id"
           >
             {{ isDeletingComment === comment.id ? "刪除中..." : "🗑️" }}

@@ -43,12 +43,12 @@
               </div>
             </div>
           </div>
-          <button
+          <!-- <button
             class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition-colors"
             @click="toTravelPage"
           >
             <p class="text-white text-sm">行程參考</p>
-          </button>
+          </button> -->
         </div>
 
         <!-- 內容與留言區域 -->
@@ -80,9 +80,12 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useRouter } from 'vue-router'
 import axios from "axios";
 import CommentSection from "../components/CommentSection.vue";
 import FavoriteButton from "../components/FavoriteButton.vue";
+
+const router = useRouter()
 
 const props = defineProps({
   post: {
@@ -98,6 +101,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  scheduleId: Number
 });
 
 const emit = defineEmits(["close", "update-post"]);
@@ -114,6 +118,7 @@ const close = () => {
 
 const toTravelPage = () => {
   console.log("跳轉到行程頁面");
+  router.push({ name: 'scheduledetail', params: { id: props.scheduleId } })
 };
 
 // 獲取行程 title

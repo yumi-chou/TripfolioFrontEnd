@@ -6,13 +6,15 @@
     :class="{ favorited: isFavorited }"
   >
     {{ isFavorited ? "❤️" : "🤍" }}
-    <!-- <span v-if="isLoading">...</span> -->
   </button>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useRouter } from "vue-router";
 import axios from "axios";
+
+const router = useRouter();
 
 const props = defineProps({
   postId: {
@@ -36,11 +38,18 @@ const isLoading = ref(false);
 
 const checkFavoriteStatus = async () => {
   try {
+    const token = localStorage.getItem("token");
+    if (!token || !props.memberId) return; // 沒登入就不查詢
+
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/favorites/check/${props.postId}/${props.memberId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
     isFavorited.value = response.data.isFavorited;
-
     console.log("後端查看通過");
   } catch (error) {
     console.error("檢查收藏狀態失敗", error);
@@ -48,33 +57,46 @@ const checkFavoriteStatus = async () => {
 };
 
 const toggleFavorite = async () => {
-  isLoading.value = true;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("請先登入");
+    router.push("/login");
+    return; // ✅ 沒登入就中斷
+  }
 
+  isLoading.value = true;
   try {
     if (isFavorited.value) {
+      // 取消收藏
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/favorites/${props.postId}`,
         {
+          headers: { Authorization: `Bearer ${token}` },
           data: { memberId: props.memberId },
         },
       );
       isFavorited.value = false;
       console.log("已取消收藏");
 
-      // 發送收藏狀態變更事件，包含更新後的計數
       emit("favorite-toggled", {
         postId: props.postId,
         favoriteCount: Math.max(0, props.favoriteCount - 1),
       });
     } else {
-      // 新增
-      await axios.post(`${import.meta.env.VITE_API_URL}/favorites`, {
-        postId: props.postId,
-        memberId: props.memberId,
-      });
+      // 新增收藏
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/favorites`,
+        {
+          postId: props.postId,
+          memberId: props.memberId,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       isFavorited.value = true;
+      console.log("已加入收藏");
 
-      // 發送收藏狀態變更事件，包含更新後的計數
       emit("favorite-toggled", {
         postId: props.postId,
         favoriteCount: props.favoriteCount + 1,
@@ -82,13 +104,18 @@ const toggleFavorite = async () => {
     }
   } catch (error) {
     console.error("切換收藏狀態失敗", error);
+    if (error.response?.status === 401) {
+      alert("請先登入");
+      router.push("/login");
+    } else {
+      alert("操作失敗，請稍後再試");
+    }
   } finally {
-    isLoading.value = false; // 關鍵修正
+    isLoading.value = false;
   }
 };
 
 onMounted(() => {
-  console.log("目前 props.memberId:", props.memberId);
   checkFavoriteStatus();
 });
 
@@ -96,7 +123,6 @@ watch(
   () => props.memberId,
   (newVal, oldVal) => {
     if (newVal !== oldVal && newVal) {
-      console.log("目前 props.memberId:", props.memberId);
       checkFavoriteStatus();
     }
   },

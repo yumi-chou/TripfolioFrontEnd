@@ -1,3 +1,32 @@
+<script setup>
+import { ref, defineEmits, defineProps } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const emit = defineEmits(["submit"]);
+const input = ref("");
+
+const props = defineProps({
+  isSubmitting: Boolean,
+});
+
+function safeSubmit() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("請先登入");
+    router.push("/login");
+    return;
+  }
+  const trimmed = input.value.trim();
+  if (!trimmed) return;
+  emit("submit", trimmed);
+  input.value = "";
+}
+
+const handleSubmit = () => safeSubmit();
+const emitSubmit   = () => safeSubmit(); 
+</script>
+
 <template>
   <div class="add-comment flex flex-wrap items-center gap-2 mt-4">
     <input
@@ -17,62 +46,3 @@
     </button>
   </div>
 </template>
-
-<script setup>
-import { ref, defineEmits } from "vue";
-
-const emit = defineEmits(["submit"]);
-const input = ref("");
-
-function emitSubmit() {
-  const trimmed = input.value.trim();
-  if (trimmed) {
-    emit("submit", trimmed);
-    input.value = "";
-  }
-}
-
-const props = defineProps({
-  isSubmitting: Boolean,
-});
-
-const handleSubmit = () => {
-  if (!input.value.trim()) return;
-  emits("submit", input.value.trim());
-  input.value = ""; // 清空輸入框
-};
-</script>
-
-<!-- <style scoped>
-/* 你可以複製原本的 .add-comment、.comment-input、.submit-btn 樣式 */
-.add-comment {
-  margin-top: 16px;
-}
-.comment-input {
-  width: 80%;
-  height: 80%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  resize: vertical;
-  font-family: inherit;
-}
-.comment-input:focus {
-  outline: none;
-  border-color: #007bff;
-}
-.submit-btn {
-  padding: 4px 8px;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.submit-btn:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-/* .submit-btn:disabled {
-  background-color: #ccc;
-} */
-</style> -->

@@ -98,7 +98,6 @@ const tabs = [
   { key: "travels", label: "我建立的行程" },
   { key: "posts", label: "我建立的貼文" },
   { key: "collected", label: "我收藏的貼文" },
-  { key: "notifications", label: "通知設定" },
 ];
 const activeTab = ref("travels");
 

@@ -33,14 +33,15 @@
       <!-- 主圖上傳 -->
       <div>
         <label class="block text-lg font-medium mb-2">貼文主圖</label>
+        <p>（請上傳 JPG、PNG，檔案最高3MB）</p>
         <input
           type="file"
           accept="image/*"
           @change="handleImageUpload"
-          class="w-full"
+          class="w-full mt-2 px-4 py-2 rounded-xl cursor-pointer bg-white/30"
         />
         <div
-          class="mt-3 rounded-xl shadow-md w-full max-w-xs h-48 overflow-hidden flex items-center justify-center"
+          class="mt-3 rounded-xl shadow-lg w-full max-w-xs h-48 overflow-hidden flex items-center justify-center"
         >
           <img
             v-if="previewImage"
@@ -116,7 +117,7 @@ function handleImageUpload(e) {
   const acceptedTypes = ["image/jpeg", "image/png", "image/webp"];
   const maxSizeBytes = 3145728;
   if (!acceptedTypes.includes(file.type) || file.size > maxSizeBytes) {
-    alert("格式不支援或檔案太大。請上傳 JPG、PNG 或 WebP。檔案最高3MB");
+    alert("格式不支援或檔案太大。請上傳 JPG、PNG。檔案最高3MB");
 
     const selected = schedules.value.find(
       (s) => s.id === selectedScheduleId.value,
@@ -168,10 +169,10 @@ async function submitPost() {
         },
       },
     );
-    alert("success");
+    alert("發佈成功");
     router.push("/community");
   } catch (err) {
-    alert("發佈貼文失敗，請稍後再試！");
+    alert("發佈貼文失敗，請填寫所有欄位");
   }
 }
 </script>

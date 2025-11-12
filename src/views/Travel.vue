@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import TravelSchedule from "@/components/TravelSchedule.vue";
 import axios from "axios";
@@ -113,6 +113,8 @@ import GoogleMapView from "@/views/GoogleMapView.vue";
 import ScheduleDetail from "@/views/scheduleDetail.vue";
 import { useTripStore } from "@/stores/tripStore";
 import PaymentModal from "@/components/PaymentModal.vue";
+import { APP_LOGOUT_EVENT, checkLoginStatus } from "@/composable/authUtils";
+
 
 const router = useRouter();
 const route = useRoute();
@@ -150,8 +152,15 @@ const fetchIsPremium = async () => {
 
 //首次載入取得行程
 onMounted(() => {
-  tripStore.fetchTrips();
+  if (checkLoginStatus()) {
+    tripStore.fetchTrips();
+  } else {
+   tripStore.trips = []; 
+  }
   fetchIsPremium();
+
+ window.addEventListener(APP_LOGOUT_EVENT, handleLogoutEvent);
+
 
   if (
     route.query.linepayResult === "success" ||
@@ -244,6 +253,17 @@ defineExpose({
   refreshDailyPlan,
   dailyPlanRef,
 });
+
+onBeforeUnmount(() => {
+  window.removeEventListener(APP_LOGOUT_EVENT, handleLogoutEvent);
+});
+
+function handleLogoutEvent() {
+  tripStore.trips = [];
+  editingTripId.value = null;
+  showForm.value = false;
+  showPayModal.value = false;
+}
 </script>
 
 <style scoped></style>

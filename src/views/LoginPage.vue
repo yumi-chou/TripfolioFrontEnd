@@ -109,6 +109,7 @@ import { initializeAuth } from '../composable/authUtils';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { logoutUser } from '@/composable/authUtils';
 
 const router = useRouter();
 const TOKEN_NAME = 'token';
@@ -162,18 +163,9 @@ const handleGoogleLogin = () => {
   window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
 };
 
-const logout = async () => {
-  const token = localStorage.getItem(TOKEN_NAME);
-  if (!token) return;
 
-  localStorage.removeItem(TOKEN_NAME);
-  localStorage.removeItem("memberId");
-  isLoggedIn.value = false;
-  clearText();
 
-  window.dispatchEvent(new Event("login-status-changed"));
-  router.push("/login");
-};
+const logout = () => logoutUser(router);
 
 onMounted(() => {
   initializeAuth(router);

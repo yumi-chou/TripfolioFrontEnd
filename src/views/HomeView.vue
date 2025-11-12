@@ -14,121 +14,121 @@
           <span style="--i: 8;; margin-right: -0.4em;">O</span>
         </div>
       </div>
-      <div class="w-[100vw]">
+      <div class="w-[100vw] relative">
           <div class="mt-25 ml-4 mr-4 h-[600px] flex ">
             <img :src="img1" alt="首圖" class="mx-auto w-full h-full object-cover rounded-[3rem]" loading="lazy" />
           </div>
-          <!-- <div class="w-[60vw] mx-auto mt-20 z-10 relative">
-            <section class="bg-gray-800/30 navbar-style backdrop-blur-[10px] text-white rounded-4xl py-3 px-6 shadow-md">
-              <div
-                class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4"
-              >
-                <div class="relative w-fit">
-                  <select
-                    :value="route.query.city || 'none'"
-                    @change="onCityChange($event)"
-                    class="appearance-none bg-gray-800/80 text-white text-sm py-2 pl-4 pr-10 rounded-full focus:outline-none hover:bg-gray-400 transition duration-200 cursor-pointer shadow-inner"
-                  >
-                    <option value="none">當前</option>
-                    <option
-                      v-for="city in cities"
-                      :key="city.name"
-                      :value="city.name"
-                    >
-                      {{ city.name }}
-                    </option>
-                  </select>
-                  <svg
-                    class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-white pointer-events-none"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-                <div class="relative w-full bg-gray-600 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white pointer-events-none"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                    />
-                  </svg>
-                  <input
-                    type="text"
-                    v-model="searchQuery"
-                    placeholder="輸入地點"
-                    class="w-full rounded-full border-none text-white px-9 py-1.5 box-border text-base placeholder-white focus:outline-none"
-                    ref="searchInput"
-                    @keyup.enter="searchPlace"
-                  />
-                  <button
-                    @click.prevent="searchPlace"
-                    class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 px-2.5 py-1.5 rounded-full border-none cursor-pointer text-xs text-white"
-                  >
-                    搜尋
-                  </button>
-                </div>
-              </div>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <button
-                  v-for="item in categories"
-                  :key="item.type"
-                  @click="searchByCategory(item.type)"
-                  class="bg-gray-700 px-3 py-1 rounded-full flex items-center space-x-1 hover:bg-blue-100"
+            <div class="w-[60vw] mx-auto z-10 absolute top-130 left-0 right-0">
+              <section class="bg-gray-800/30 navbar-style backdrop-blur-[10px] text-white rounded-4xl py-3 px-6 shadow-md">
+                <div
+                  class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4"
                 >
-                  {{ item.label }}
-                </button>
-                <div class="relative" ref="menuRef">
-                  <button
-                    @click="showCustomCategory = !showCustomCategory"
-                    class="block w-full text-left px-3 py-2 rounded-full hover:bg-gray-600 text-white font-semibold left-3.5"
-                  >
-                    + others
-                  </button>
-                  <div
-                    v-if="showCustomCategory"
-                    class="absolute z-10 bg-gray-400/90 rounded-4xl p-3 w-80 shadow-md bottom-1 left-18 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
-                  >
-                    <button
-                      @click="removeCategory(item)"
-                      v-for="item in categories"
-                      :key="item.type"
-                      class="m-4"
+                  <div class="relative w-fit">
+                    <select
+                      :value="route.query.city || 'none'"
+                      @change="onCityChange($event)"
+                      class="appearance-none bg-gray-800/80 text-white text-sm py-2 pl-4 pr-10 rounded-full focus:outline-none hover:bg-gray-400 transition duration-200 cursor-pointer shadow-inner"
                     >
-                      {{ item.label }} ❌
-                    </button>
-                    <hr />
-                    <button
-                      @click="addCategory(item)"
-                      v-for="item in placeCategories"
-                      :key="item.type"
-                      class="m-4 cursor-pointer"
+                      <option value="none">當前</option>
+                      <option
+                        v-for="city in cities"
+                        :key="city.name"
+                        :value="city.name"
+                      >
+                        {{ city.name }}
+                      </option>
+                    </select>
+                    <svg
+                      class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-white pointer-events-none"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
                     >
-                      {{ item.label }}
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                  <div class="relative w-full bg-gray-600 rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white pointer-events-none"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                      />
+                    </svg>
+                    <input
+                      type="text"
+                      v-model="searchQuery"
+                      placeholder="輸入地點"
+                      class="w-full rounded-full border-none text-white px-9 py-1.5 box-border text-base placeholder-white focus:outline-none"
+                      ref="searchInput"
+                      @keyup.enter="searchPlace"
+                    />
+                    <button
+                      @click.prevent="searchPlace"
+                      class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 px-2.5 py-1.5 rounded-full border-none cursor-pointer text-xs text-white"
+                    >
+                      搜尋
                     </button>
                   </div>
                 </div>
-              </div>
-            </section>
-          </div> -->
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <button
+                    v-for="item in categories"
+                    :key="item.type"
+                    @click="searchByCategory(item.type)"
+                    class="bg-gray-700 px-3 py-1 rounded-full flex items-center space-x-1 hover:bg-blue-100"
+                  >
+                    {{ item.label }}
+                  </button>
+                  <div class="relative" ref="menuRef">
+                    <button
+                      @click="showCustomCategory = !showCustomCategory"
+                      class="block w-full text-left px-3 py-2 rounded-full hover:bg-gray-600 text-white font-semibold left-3.5"
+                    >
+                      + others
+                    </button>
+                    <div
+                      v-if="showCustomCategory"
+                      class="absolute z-10 bg-gray-400/90 rounded-4xl p-3 w-80 shadow-md bottom-1 left-18 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
+                    >
+                      <button
+                        @click="removeCategory(item)"
+                        v-for="item in categories"
+                        :key="item.type"
+                        class="m-4"
+                      >
+                        {{ item.label }} ❌
+                      </button>
+                      <hr />
+                      <button
+                        @click="addCategory(item)"
+                        v-for="item in placeCategories"
+                        :key="item.type"
+                        class="m-4 cursor-pointer"
+                      >
+                        {{ item.label }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
       </div>
     </section>
 
-    <section class="min-h-[600px] flex flex-col sm:flex-row relative mt-10 mb-20 ">
+    <section class="min-h-[600px] flex flex-col sm:flex-row relative mt-0 mb-20 ">
       <h2 class=" ml-10 sm:ml-50 mt-10 sm:mt-30" data-aos="fade-up" data-aos-duration="1000">
         <p class="text-3xl sm:text-5xl font-bold tracking-[1px] sm:tracking-[4px] mb-4">探索你的地圖</p>
         <p class="mt-1 text-lg sm:text-2xl font-medium tracking-wide sm:tracking-wider whitespace-nowrap"> 標記景點留下足跡，每段旅程都是值得收藏的人生篇章</p>
@@ -231,7 +231,6 @@
       </div>
     </section>
 
-
       <RouterLink to="/schedule" class="flex justify-center mt-20 mb-25" >
         <input
           type="image"
@@ -239,26 +238,7 @@
           class="w-80 cursor-pointer"
         />
       </RouterLink>
-  
-
     <Footer />
-
-    <!-- <section class="">
-            <p class="mb-2">其他連結 我先放這</p>
-            <div class="flex flex-wrap gap-4">
-              <RouterLink to="/emailSettings" class="underline"
-                >Email 通知</RouterLink
-              >
-              <RouterLink to="/profile" class="underline"
-                >會員資料修改</RouterLink
-              >
-              <RouterLink to="/calendar" class="underline"
-                >連結 Google Calendar</RouterLink
-              >
-              <RouterLink to="/schedule" class="underline">個人行程</RouterLink>
-              <RouterLink to="/community">社群貼文</RouterLink>
-            </div>
-    </section> -->
   </div>
 </template>
 
@@ -313,7 +293,7 @@ const maxCategoryCount = 5;
 function searchPlace() {
   if (!searchQuery.value) return;
   router.push({
-    path: "/map",
+    path: "/schedule",
     query: {
       searchQuery: searchQuery.value,
     },
@@ -326,7 +306,7 @@ function searchByCategory(type) {
   searchQuery.value = "";
 
   router.push({
-    path: "/map",
+    path: "/schedule",
     query: {
       searchQuery: type,
       city: selectedCityName.value || "none",
@@ -339,7 +319,7 @@ function onCityChange(event) {
   selectedCityName.value = cityName;
 
   router.push({
-    path: "/map",
+    path: "/schedule",
     query: {
       searchQuery: searchQuery.value || "tourist_attraction",
       city: cityName || "none",

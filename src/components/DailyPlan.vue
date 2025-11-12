@@ -20,7 +20,8 @@
       <template #item="{ element: p, index }">
         <div class="">
           <li
-            class="navbar-style mb-4 list-none flex justify-between rounded-2xl w-[80%] mx-auto relative items-stretch"
+            class="navbar-style mb-4 list-none flex justify-between rounded-2xl w-[80%] mx-auto relative items-stretch
+         h-44 overflow-hidden"
           >
             <div class="w-1/2 p-3">
               <p
@@ -32,7 +33,7 @@
               <div class="flex flex-col items-start text-white text-xs">
                 <p
                   v-if="!p.editingTime"
-                  class="cursor-pointer pb-2"
+                  class="cursor-pointer  bg-white/20 px-2 rounded"
                   @click="startEditing(p)"
                 >
                   {{ formatTime(p.arrivalHour, p.arrivalMinute) }}抵達

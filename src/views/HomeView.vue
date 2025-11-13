@@ -224,13 +224,13 @@
       <div class="relative w-full  min-h-[700px] md:min-h-[300px] h-full inset-0 shadow-xl rounded-3xl overflow-hidden z-0 ml-auto ">
         <img :src="map" class="w-full h-full object-cover absolute z-0 " />
               
-        <div class="absolute top-25 left-1/2 -translate-x-1/2 md:translate-0 md:left-20 md:top-45 z-40 text-center ">
+        <div class="absolute top-25 left-1/2 -translate-x-1/2 md:translate-0 md:left-10 md:top-45 z-40 text-center ">
           <h2 class="text-3xl md:text-4xl font-bold tracking-wide md:tracking-wider whitespace-nowrap" 
           data-aos="fade-right" 
           data-aos-duration="2000">
             高自由度行程規劃
           </h2>
-          <p class="text-lg whitespace-nowrap font-medium tracking-wide md:mt-5 md:ml-16 md:tracking-wider md:text-xl" data-aos="fade-left" data-aos-duration="2000">
+          <p class="text-lg whitespace-nowrap font-medium tracking-wide md:mt-5 md:ml-30 md:tracking-wider md:text-xl" data-aos="fade-left" data-aos-duration="2000">
             景點隨心拖曳排序 輕鬆管理你的旅程
           </p>
         </div>

@@ -6,8 +6,8 @@
       </router-link>
     </div>
 
-    <nav class="flex-1 flex justify-center space-x-1 md:space-x-6 items-center">
-      <button class="flex items-center space-x-1 pr-5">
+    <nav class="flex-1 flex justify-center space-x-3 md:space-x-10 ">
+      <button class="flex items-center space-x-1">
         <RouterLink to="/schedule" class="">
           <font-awesome-icon :icon="['fas', 'compass']" />
           <span class="pl-2 no-underline">探索</span>

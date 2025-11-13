@@ -130,7 +130,7 @@
 
     <section
         class="min-h-[600px] flex flex-col md:flex-row items-center justify-between relative
-          md:mt-[max(100px,calc(env(safe-area-inset-top)+80px))] mt-[max(100px,calc(env(safe-area-inset-top)+200px))] mb-20 px-6 md:px-16 "
+          md:mt-[max(100px,calc(env(safe-area-inset-top)+80px))] mt-[max(100px,calc(env(safe-area-inset-top)+150px))] mb-20 px-6 md:px-16 "
     >
       <!-- 左：標題＋內文＋三個黑按鈕 -->
       <div

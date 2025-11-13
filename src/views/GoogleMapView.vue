@@ -252,7 +252,7 @@
           @click="removeCategory(item)"
           v-for="item in categories"
           :key="item.type"
-          class="m-4 cursor-pointer"
+          class="m-4 cursor-pointer flex-nowrap"
         >
           {{ item.label }} ❌
         </button>

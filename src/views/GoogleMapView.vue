@@ -8,7 +8,7 @@
   />
 
   <div
-    class="navbar-style z-[2] flex items-center gap-2.5 px-2 py-1 rounded-full fixed left-1/2 -translate-x-1/2 top-[13%] w-[55%] min-w-[220px] max-w-[350px] justify-between md:absolute md:top-7 md:right-15 md:left-auto md:bottom-auto md:translate-x-0 md:w-auto md:flex-nowrap"
+    class="navbar-style z-[2] flex items-center gap-2.5 px-2 py-1 rounded-full absolute left-1/2 -translate-x-1/2 top-[13%] w-[55%] min-w-[220px] max-w-[350px] justify-between md:absolute md:top-7 md:right-15 md:left-auto md:bottom-auto md:translate-x-0 md:w-auto md:flex-nowrap "
   >
     <div class="relative w-fit text-white/20">
       <select
@@ -27,12 +27,12 @@
       </span>
     
     </div>
-    <div class="relative w-[150px]">
+    <div class="relative w-[150px] flex items-center">
       <input
         type="text"
         v-model="searchQuery"
         placeholder="輸入地點"
-        class="w-full text-sm border-none px-3 py-1.5 box-border text-base placeholder-white focus:outline-none rounded-2xl"
+        class="w-full flex-grow text-sm border-none px-3 py-1.5 box-border placeholder-white focus:outline-none rounded-2xl"
         ref="searchInput"
         @keyup.enter="searchPlace"
       />
@@ -195,12 +195,18 @@
   </div>
 
   <aside
-    class="navbar-style fixed z-50 left-1/2 -translate-x-1/2 bottom-[38%] w-[85%] max-w-[350px] flex flex-row justify-around items-center gap-2 p-3 rounded-2xl md:top-1/2 md:left-5 md:translate-x-0 md:-translate-y-1/2 md:flex-col md:justify-start md:items-stretch md:gap-2 md:rounded-full md:w-18 md:h-auto md:min-h-[300px]"
+    class="navbar-style absolute z-50
+         left-1/2 -translate-x-1/2 bottom-[1%] w-[85%] max-w-[350px]
+         flex flex-row justify-around items-center gap-2 p-1 rounded-2xl
+
+         md:top-1/2 md:left-5 md:translate-x-0 md:-translate-y-1/2
+         md:flex-col md:justify-center md:items-center md:gap-4
+         md:rounded-full md:w-[72px] md:h-auto md:min-h-0"
     ref="menuRef"
   >
     <button
       @click="locateUser"
-      class="navbar-style block w-full text-left hover:bg-gray-400 text-white px-4 py-2 rounded-full cursor-pointer shadow-inner"
+      class="navbar-style block text-left hover:bg-gray-400 text-white px-4 py-2 rounded-full cursor-pointer shadow-inner"
     >
       ⚙︎
     </button>
@@ -216,11 +222,11 @@
 
     <div
       v-if="hovered === item.type"
-      class="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-800 text-white text-sm rounded px-2 py-1 whitespace-nowrap shadow"
+      class="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-800 text-white text-sm rounded px-2 py-1 whitespace-nowrap shadow hidden md:block"
     >
       {{ item.name }}
     </div>
-  </div>
+    </div>
 
     <div class="relative">
       <button
@@ -232,7 +238,7 @@
 
       <div
         v-if="showCustomCategory"
-        class="navbar-style absolute z-10 rounded-2xl p-3 w-80 shadow-md bottom-1 left-18 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
+        class="max-h-[260px] overflow-y-auto navbar-style fixed z-10 bottom-13 rounded-2xl p-3 w-80 shadow-md mb-4 right-0 md:fixed md:bottom-1 md:left-21 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
       >
         <button
           @click="removeCategory(item)"
@@ -246,7 +252,7 @@
         <div
           v-for="item in placeCategories"
           :key="item.type"
-          class="relative inline-block m-4"
+          class="relative inline-block md:m-4 m-2"
         >
           <button
             @click="addCategory(item)"
@@ -259,9 +265,12 @@
 
           <div
             v-show="hovered === item.type"
-            class="absolute left-1/2 top-full mt-1 -translate-x-1/2  bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow pointer-events-none"
+            class="absolute left-1/2 top-full mt-1 -translate-x-1/2  bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow pointer-events-none hidden md:block"
           >
             {{ item.name }}
+          </div>
+          <div class="mt-1 text-xs text-center text-white-600 md:hidden">
+             {{ item.name }}
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@
   />
 
   <div
-    class="navbar-style z-[2] flex items-center gap-2.5 px-2 py-1 rounded-full absolute left-1/2 -translate-x-1/2 top-[13%] w-[55%] min-w-[220px] max-w-[350px] justify-between md:absolute md:top-7 md:right-15 md:left-auto md:bottom-auto md:translate-x-0 md:w-auto md:flex-nowrap "
+    class="navbar-style z-[2] flex items-center gap-2.5 px-2 py-1 rounded-full absolute left-1/2 -translate-x-1/2 top-[20%] w-[55%] min-w-[220px] max-w-[350px] justify-between md:absolute md:top-7 md:right-15 md:left-auto md:bottom-auto md:translate-x-0 md:w-auto md:flex-nowrap "
   >
     <div class="relative w-fit text-white/20">
       <select
@@ -32,7 +32,15 @@
         type="text"
         v-model="searchQuery"
         placeholder="輸入地點"
-        class="w-full flex-grow text-sm border-none px-3 py-1.5 box-border placeholder-white focus:outline-none rounded-2xl"
+        class="w-full flex-grow text-sm border-none px-3 py-1.5 box-border placeholder-white focus:outline-none rounded-2xl hidden md:block"
+        ref="searchInput"
+        @keyup.enter="searchPlace"
+      />
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="輸入"
+        class="w-full flex-grow text-sm border-none px-3 py-1.5 box-border placeholder-white focus:outline-none rounded-2xl md:hidden"
         ref="searchInput"
         @keyup.enter="searchPlace"
       />

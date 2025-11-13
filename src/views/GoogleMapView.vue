@@ -60,6 +60,7 @@
   >
     📌
   </button>
+  
   <transition name="slide-fade">
     <div
       v-show="showCards && placeDetails.length"
@@ -120,87 +121,122 @@
       </div>
     </div>
   </transition>
+
+<div
+  v-if="selectedPlace"
+  class="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] px-3 sm:px-0"
+  @click.self="selectedPlace = null"
+>
   <div
-    v-if="selectedPlace"
-    class="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]"
-    @click.self="selectedPlace = null"
+    class="solo-card-style w-full max-w-xl sm:max-w-2xl
+           p-4 sm:p-6 border-2 border-white/30
+           shadow-[0_0_10px_1px_rgba(255,255,255,0.5)]
+           bg-white/10 backdrop-blur-md
+           flex flex-col md:flex-row
+           rounded-3xl relative gap-4 sm:gap-6"
   >
-    <div
-      class="solo-card-style w-full max-w-2xl p-3 border-2 border-white/30 shadow-[0_0_10px_1px_rgba(255,255,255,0.5)] bg-white/10 backdrop-blur-md flex rounded-4xl relative gap-5"
-    >
-      <div class="relative">
-        <button
-          v-if="selectedPlace.photos && selectedPlace.photos.length > 1"
-          @click.stop="
-            selectedPlacePhotoIndex =
-              (selectedPlacePhotoIndex - 1 + selectedPlace.photos.length) %
-              selectedPlace.photos.length
-          "
-          class="absolute top-1/2 left-2 -translate-y-1/2 bg-black bg-opacity-40 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700"
-          aria-label="上一張圖片"
-        >
-          ‹
-        </button>
+    <div class="relative w-full md:w-[40%] flex-shrink-0">
+      <button
+        v-if="selectedPlace.photos && selectedPlace.photos.length > 1"
+        @click.stop="
+          selectedPlacePhotoIndex =
+            (selectedPlacePhotoIndex - 1 + selectedPlace.photos.length) %
+            selectedPlace.photos.length
+        "
+        class="absolute top-1/2 left-2 -translate-y-1/2
+               bg-black/40 text-white rounded-full
+               w-8 h-8 flex items-center justify-center hover:bg-gray-700"
+        aria-label="上一張圖片"
+      >
+        ‹
+      </button>
 
-        <img
-          :src="
-            selectedPlace.photos && selectedPlace.photos.length
-              ? selectedPlace.photos[selectedPlacePhotoIndex].getUrl({
-                  maxWidth: 400,
-                })
-              : defaultImage
-          "
-          @error="(e) => (e.target.src = defaultImage)"
-          alt="地點圖片"
-          class="max-w-full aspect-[4/3] object-cover rounded-2xl"
-        />
-        <button
-          v-if="selectedPlace.photos && selectedPlace.photos.length > 1"
-          @click.stop="
-            selectedPlacePhotoIndex =
-              (selectedPlacePhotoIndex + 1) % selectedPlace.photos.length
-          "
-          class="absolute top-1/2 right-2 -translate-y-1/2 bg-black bg-opacity-40 text-white flex rounded-full w-8 h-8 items-center justify-center hover:bg-gray-700"
-          aria-label="下一張圖片"
+      <img
+        :src="
+          selectedPlace.photos && selectedPlace.photos.length
+            ? selectedPlace.photos[selectedPlacePhotoIndex].getUrl({
+                maxWidth: 400,
+              })
+            : defaultImage
+        "
+        @error="(e) => (e.target.src = defaultImage)"
+        alt="地點圖片"
+        class="w-full h-40 sm:h-52 md:h-60 object-cover rounded-2xl"
+      />
+
+      <button
+        v-if="selectedPlace.photos && selectedPlace.photos.length > 1"
+        @click.stop="
+          selectedPlacePhotoIndex =
+            (selectedPlacePhotoIndex + 1) % selectedPlace.photos.length
+        "
+        class="absolute top-1/2 right-2 -translate-y-1/2
+               bg-black/40 text-white rounded-full
+               w-8 h-8 flex items-center justify-center hover:bg-gray-700"
+        aria-label="下一張圖片"
+      >
+        ›
+      </button>
+    </div>
+
+    <div class="flex-1 flex flex-col mr-0 md:mr-2.5 mt-3 md:mt-0">
+      <h2
+        class="text-lg sm:text-2xl text-white mb-1 sm:mb-2
+               break-words leading-snug"
+      >
+        {{ selectedPlace.name }}
+      </h2>
+
+      <p class="text-xs sm:text-sm text-white mb-2 leading-snug">
+        {{ selectedPlace.formatted_address }}
+      </p>
+
+      <p v-if="selectedPlace.rating" class="text-sm sm:text-base text-yellow-400 mb-1">
+        ⭐ {{ selectedPlace.rating }}（共
+        {{ selectedPlace.user_ratings_total }} 則評價）
+      </p>
+
+      <div
+        v-if="selectedPlace?.current_opening_hours?.weekday_text?.length ||
+              selectedPlace?.opening_hours?.weekday_text?.length"
+        class="mt-2 max-h-24 sm:max-h-32 overflow-y-auto pr-1"
+      >
+        <ul
+          v-if="selectedPlace?.current_opening_hours?.weekday_text?.length"
+          class="text-[11px] sm:text-xs text-white/80 space-y-0.5"
         >
-          ›
-        </button>
-      </div>
-      <div class="mr-2.5">
-        <h2
-          class="text-2xl text-white mb-1 mt-5 break-words max-w-[20rem] truncate"
-        >
-          {{ selectedPlace.name }}
-        </h2>
-        <p class="text-white text-sm mb-2">
-          {{ selectedPlace.formatted_address }}
-        </p>
-        <p v-if="selectedPlace.rating" class="text-yellow-600 mb-1">
-          ⭐ {{ selectedPlace.rating }}（共
-          {{ selectedPlace.user_ratings_total }} 則評價）
-        </p>
-        <ul v-if="selectedPlace?.current_opening_hours?.weekday_text?.length"
-            class="text-xs text-white/80">
-          <li v-for="line in selectedPlace.current_opening_hours.weekday_text" :key="line">
+          <li
+            v-for="line in selectedPlace.current_opening_hours.weekday_text"
+            :key="line"
+          >
             {{ line }}
           </li>
         </ul>
-            <ul v-else-if="selectedPlace?.opening_hours?.weekday_text?.length"
-            class="text-xs text-white/80">
-          <li v-for="line in selectedPlace.opening_hours.weekday_text" :key="line">
+
+        <ul
+          v-else-if="selectedPlace?.opening_hours?.weekday_text?.length"
+          class="text-[11px] sm:text-xs text-white/80 space-y-0.5"
+        >
+          <li
+            v-for="line in selectedPlace.opening_hours.weekday_text"
+            :key="line"
+          >
             {{ line }}
           </li>
         </ul>
-
-        <button
-          @click="callItinerary"
-          class="absolute bottom-4 right-4 border px-4 py-1 rounded-2xl text-white cursor-pointer"
-        >
-          加入行程+
-        </button>
       </div>
+
+      <button
+        @click="callItinerary"
+        class="mt-3 self-end border border-white/80
+               px-4 py-1.5 rounded-2xl text-xs sm:text-sm text-white cursor-pointer"
+      >
+        加入行程+
+      </button>
     </div>
   </div>
+</div>
+
 
   <aside
     class="navbar-style absolute z-50

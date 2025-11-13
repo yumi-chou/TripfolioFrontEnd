@@ -6,7 +6,7 @@
       </router-link>
     </div>
 
-    <nav class="flex-1 flex justify-center space-x-6 items-center">
+    <nav class="flex-1 flex justify-center space-x-1 md:space-x-6 items-center">
       <button class="flex items-center space-x-1 pr-5">
         <RouterLink to="/schedule" class="">
           <font-awesome-icon :icon="['fas', 'compass']" />

@@ -219,29 +219,59 @@
       </div>
     </section>
   
-    <section class="h-auto sm:h-[500px] w-[80vw] flex flex-col sm:flex-row items-center space-y-10 sm:space-y-0 sm:space-x-0 relative mx-auto rounded-3xl my-10">
-      
-      <div class="relative hidden sm:block z-10 py-10 sm:pl-6 flex-col-reverse sm:flex-row items-center px-6 sm:px-20">
-        <HomeSchedule />
-      </div>
+    <section
+  class="h-auto sm:h-[500px] w-full sm:w-[80vw] flex flex-col sm:flex-row
+         items-center space-y-10 sm:space-y-0 sm:space-x-0
+         relative mx-auto rounded-3xl my-10 px-4 sm:px-0"
+>
+  <!-- 桌機版行程卡：一樣維持原本隱藏手機 -->
+  <div
+    class="relative hidden sm:block z-10 py-10 sm:pl-6
+           flex-col-reverse sm:flex-row items-center px-6 sm:px-20"
+  >
+    <HomeSchedule />
+  </div>
 
-      <div class="relative w-full  min-h-[700px] sm:min-h-[300px] h-full inset-0 shadow-xl rounded-3xl overflow-hidden z-0 ml-auto ">
-        <img :src="map" class="w-full h-full object-cover absolute z-0" />
-              
-        <div class="absolute mt-20 ml-10 sm:ml-20 sm:mt-50 z-40 ">
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-wide sm:tracking-wider" data-aos="fade-right" data-aos-duration="2000">
-            高自由度行程規劃
-          </h2>
-          <p class="mt-5 ml-8 sm:ml-16 text-lg sm:text-xl font-medium tracking-wide sm:tracking-wider" data-aos="fade-left" data-aos-duration="2000">
-            景點隨心拖曳排序 輕鬆管理你的旅程
-          </p>
-         </div>
-          <div class="block sm:hidden absolute top-50 left-12 ">
-            <HomeSchedule />
-          </div>
-       
-      </div>
-    </section>
+  <div
+    class="relative w-full min-h-[650px] sm:min-h-[300px] h-full
+           shadow-xl rounded-3xl overflow-hidden z-0"
+  >
+    <img :src="map" class="w-full h-full object-cover absolute inset-0 z-0" />
+
+    <!-- 標題：手機置中、桌機維持左對齊 -->
+    <div
+      class="absolute z-40
+             top-10 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+             sm:left-20 sm:translate-x-0 sm:text-left sm:top-20"
+    >
+      <h2
+        class="text-3xl sm:text-4xl font-bold tracking-wide sm:tracking-wider"
+        data-aos="fade-right"
+        data-aos-duration="2000"
+      >
+        高自由度行程規劃
+      </h2>
+      <p
+        class="mt-5 text-lg sm:text-xl font-medium
+               tracking-wide sm:tracking-wider"
+        data-aos="fade-left"
+        data-aos-duration="2000"
+      >
+        景點隨心拖曳排序 輕鬆管理你的旅程
+      </p>
+    </div>
+
+    <!-- 手機版行程卡：置中＋限制寬度，避免跑出畫面 -->
+    <div
+      class="block sm:hidden absolute z-40
+             left-1/2 -translate-x-1/2 top-[25%]
+             w-[88%]"
+    >
+      <HomeSchedule />
+    </div>
+  </div>
+</section>
+
 
     <section class="min-h-[600px] px-6 py-16">
 

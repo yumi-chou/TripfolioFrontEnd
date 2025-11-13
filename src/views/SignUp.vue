@@ -1,6 +1,6 @@
 <template>
   <div class="homepage-bg min-h-screen relative">
-    <div class="w-1/2 py-5 absolute top-100 left-1/2 -translate-1/2 rounded-2xl bg-black/45 shadow-2xl min-h-[400px] min-w-[400px]">
+    <div class="md:w-1/2 py-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/45 shadow-2xl ">
       <h2 class="text-lg font-bold mb-8 text-center text-white">註冊</h2>
       <div v-if="showError" class="space-y-2 w-[300px] mx-auto">
         <div
@@ -24,7 +24,7 @@
       </div>
 
       <form
-        class="space-y-6 flex flex-col justify-center items-center"
+        class="space-y-6 flex flex-col justify-center items-center px-2"
         @submit.prevent="signUp"
       >
         <input

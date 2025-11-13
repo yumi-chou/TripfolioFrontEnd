@@ -1,7 +1,7 @@
 <template>
   <div class="homepage-bg min-h-screen relative ">
     <main
-      class="w-1/2 py-5 absolute top-100  left-1/2 -translate-1/2 rounded-2xl bg-black/45 shadow-2xl min-h-[400px] min-w-[400px] "
+      class="md:w-1/2 py-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black/45 shadow-2xl "
     >
       <h4 class="text-lg font-bold mb-10 text-center text-white">登入</h4>
 
@@ -18,7 +18,7 @@
       <form
         v-if="!isLoggedIn"
         @submit.prevent="login"
-        class="space-y-6 flex flex-col justify-center items-center"
+        class="space-y-6 flex flex-col justify-center items-center px-2"
       >
         <div>
           <input

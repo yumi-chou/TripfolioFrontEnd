@@ -217,22 +217,24 @@
   
     <section class="h-auto md:h-[500px] w-[80vw] flex flex-col md:flex-row items-center space-y-10 md:space-y-0 md:space-x-0 relative mx-auto rounded-3xl my-10">
       
-      <div class="relative hidden md:block z-10 py-10 sm:pl-6 flex-col-reverse md:flex-row items-center px-6 md:px-20">
+      <div class="relative hidden md:block z-10 py-10 md:pl-6 flex-col-reverse md:flex-row items-center px-6 md:px-20">
         <HomeSchedule />
       </div>
 
       <div class="relative w-full  min-h-[700px] md:min-h-[300px] h-full inset-0 shadow-xl rounded-3xl overflow-hidden z-0 ml-auto ">
         <img :src="map" class="w-full h-full object-cover absolute z-0 " />
               
-        <div class="absolute mt-20 ml-10 md:ml-20 md:mt-50 z-40 ">
-          <h2 class="text-3xl md:text-4xl font-bold tracking-wide md:tracking-wider" data-aos="fade-right" data-aos-duration="2000">
+        <div class="absolute top-25 left-1/2 -translate-x-1/2 md:translate-0 md:left-20 md:top-45 z-40 text-center ">
+          <h2 class="text-3xl md:text-4xl font-bold tracking-wide md:tracking-wider whitespace-nowrap" 
+          data-aos="fade-right" 
+          data-aos-duration="2000">
             高自由度行程規劃
           </h2>
-          <p class="mt-5 ml-8 md:ml-16 text-lg md:text-xl font-medium tracking-wide md:tracking-wider" data-aos="fade-left" data-aos-duration="2000">
+          <p class="text-lg whitespace-nowrap font-medium tracking-wide md:mt-5 md:ml-16 md:tracking-wider md:text-xl" data-aos="fade-left" data-aos-duration="2000">
             景點隨心拖曳排序 輕鬆管理你的旅程
           </p>
         </div>
-        <div class="block md:hidden absolute top-50 left-12 ">
+        <div class="block md:hidden absolute left-1/2 -translate-x-1/2 top-[35%] w-[90%]">
           <HomeSchedule />
         </div>
       </div>

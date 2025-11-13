@@ -6,7 +6,7 @@
   :loop="true"
   :centeredSlides="true"
   slidesPerView="3"
-  class="w-[300px] h-[450px]"
+  class="w-full max-w-[320px] h-[360px] md:w-[300px] md:h-[450px] "
   :spaceBetween="20" 
 >
     <SwiperSlide

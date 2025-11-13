@@ -1,8 +1,8 @@
 <template>
   <div class="homepage-bg overflow-x-hidden">
-    <section class="min-h-screen">
-      <div class="landing fixed inset-0 bg-white text-gray-500 flex justify-center items-center" v-if="show">
-        <div class="loading text-5xl tracking-[0.4em] whitespace-no-wrap" >
+    <section class="min-h-screen md:min-h-[100px]">
+      <div class="landing fixed inset-0 bg-white text-gray-500 flex justify-center items-center " v-if="show">
+        <div class="loading text-3xl md:text-5xl tracking-[0.4em] whitespace-no-wrap" >
           <span style="--i: 0">T</span>
           <span style="--i: 1">R</span>
           <span style="--i: 2">I</span>
@@ -128,32 +128,97 @@
       </div>
     </section>
 
-    <section class="min-h-[600px] flex flex-col sm:flex-row relative mt-0 mb-20 ">
-      <h2 class=" ml-10 sm:ml-50 mt-10 sm:mt-30" data-aos="fade-up" data-aos-duration="1000">
-        <p class="text-3xl sm:text-5xl font-bold tracking-[1px] sm:tracking-[4px] mb-4">探索你的地圖</p>
-        <p class="mt-1 text-lg sm:text-2xl font-medium tracking-wide sm:tracking-wider whitespace-nowrap"> 標記景點留下足跡，每段旅程都是值得收藏的人生篇章</p>
-      </h2>
-    
-      <div class="relative mt-15 sm:mt-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="static sm:absolute sm:right-100  sm:top-70 min-h-5 max-w-[200px]  bg-black rounded-full flex items-center justify-center mb-3 ml-10">
-          <p class="text-white py-1 sm:py-2 px-3 sm:px-5 text-md sm:text-lg whitespace-nowrap">一站式完成資訊蒐集</p>
-        </div>
-        <div class="static sm:absolute sm:right-70  sm:top-90 min-h-5 max-w-[150px]  bg-black rounded-full flex items-center justify-center mb-3 ml-40">
-          <p class="text-white py-1 sm:py-2 px-3 sm:px-5 text-md sm:text-lg whitespace-nowrap">快速排程</p>
-        </div>
-        <div class="static sm:absolute sm:right-90 sm:top-110 min-h-5 max-w-[150px] bg-black rounded-full flex items-center justify-center mb-3 ml-20">
-          <p class="text-white py-1 sm:py-2 px-3 sm:px-5 text-md  sm:text-lg text-shadow-sm whitespace-nowrap">與好友共編</p>
+    <section
+        class="min-h-[600px] flex flex-col md:flex-row items-center justify-between relative
+         mt-[max(100px,calc(env(safe-area-inset-top)+80px))] mb-20 px-6 md:px-16 "
+    >
+      <!-- 左：標題＋內文＋三個黑按鈕 -->
+      <div
+        class="relative w-full md:w-1/2 flex flex-col justify-center z-20 text-center md:text-left md:pl-20"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h2 class="text-3xl md:text-5xl font-bold tracking-wide mb-3 md:mb-6">
+          探索你的地圖
+        </h2>
+      
+        <p
+          class="text-base md:text-xl font-medium tracking-wide md:tracking-wider whitespace-normal break-words mb-8 md:mb-15"
+        >
+          標記景點留下足跡，每段旅程都是值得收藏的人生篇章
+        </p>
+      
+        <!-- 三顆黑按鈕 -->
+        <div class="flex flex-col items-center md:items-start gap-3 md:gap-7 relative">
+          <div
+            class="bg-black rounded-full flex items-center justify-center text-white px-5 py-2 md:px-6 md:py-2 shadow-lg transition-transform duration-300 hover:scale-105"
+            data-aos="fade-right"
+            data-aos-delay="100"
+          >
+            一站式完成資訊蒐集
+          </div>
+        
+          <div
+            class="bg-black rounded-full flex items-center justify-center text-white px-6 py-2 md:px-6 md:py-2 shadow-lg md:ml-40 transition-transform duration-300 hover:scale-105"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
+            快速排程
+          </div>
+        
+          <div
+            class="bg-black rounded-full flex items-center justify-center text-white px-6 py-2 md:px-6 md:py-2 shadow-lg md:ml-20 transition-transform duration-300 hover:scale-105"
+            data-aos="fade-right"
+            data-aos-delay="300"
+          >
+            隨意拖動行程
+          </div>
         </div>
       </div>
     
-      <div class="relative ml-auto mr-auto sm:mr-50">
-        <img :src="taiwan" ref="mapImg" alt="台灣地圖" class="w-full sm:w-auto max-w-full sm:max-w-[500px] h-auto" data-aos="fade-up" data-aos-duration="1000" loading="lazy" />
-        <img src="/mapIcons/amusement_park.svg" v-show="showMarker1" alt="marker" class="absolute z-30 top-[18%] left-[40%] w-12 sm:w-16 h-12 sm:h-16 fade-in-down will-change-transform" loading="lazy" />
-        <img src="/mapIcons/restaurant.svg" v-show="showMarker2" alt="marker" class="absolute z-30 top-[30%] left-[60%] w-12 sm:w-16 h-12 sm:h-16 fade-in-down will-change-transform" loading="lazy" />
-        <img src="/mapIcons/cafe.svg" v-show="showMarker3" alt="marker" class="absolute z-30 top-[50%] left-[30%] w-12 sm:w-16 h-12 sm:h-16 fade-in-down will-change-transform" loading="lazy" />
+      <!-- 右：地圖區 -->
+      <div
+        class="relative w-full md:w-1/2 mt-10 md:mt-0 flex justify-center"
+        data-aos="fade-left"
+        data-aos-duration="1000"
+      >
+        <img
+          :src="taiwan"
+          alt="台灣地圖"
+          ref="mapImg"
+          class="w-full md:w-auto max-w-[520px] h-auto object-contain opacity-95 "
+          data-aos="fade-left"
+          loading="lazy"
+        />
+    
+        <!-- marker 標記 -->
+        <img
+          src="/mapIcons/amusement_park.svg"
+          v-show="showMarker1"
+          alt="marker"
+          class="absolute z-30 top-[18%] left-[40%] w-10 md:w-14 h-10 md:h-14 will-change-transform "
+          data-aos="fade-left"
+          loading="lazy"
+        />
+        <img
+          src="/mapIcons/restaurant.svg"
+          v-show="showMarker2"
+          alt="marker"
+          class="absolute z-30 top-[30%] left-[60%] w-10 md:w-14 h-10 md:h-14 will-change-transform "
+          data-aos="fade-left"
+          loading="lazy"
+        />
+        <img
+          src="/mapIcons/cafe.svg"
+          v-show="showMarker3"
+          alt="marker"
+          class="absolute z-30 top-[50%] left-[30%] w-10 md:w-14 h-10 md:h-14 will-change-transform "
+          data-aos="fade-left"
+          loading="lazy"
+        />
       </div>
     </section>
-    
+  
     <section class="h-auto sm:h-[500px] w-[80vw] flex flex-col sm:flex-row items-center space-y-10 sm:space-y-0 sm:space-x-0 relative mx-auto rounded-3xl my-10">
       
       <div class="relative hidden sm:block z-10 py-10 sm:pl-6 flex-col-reverse sm:flex-row items-center px-6 sm:px-20">

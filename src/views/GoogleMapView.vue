@@ -32,7 +32,7 @@
         type="text"
         v-model="searchQuery"
         placeholder="輸入地點"
-        class="w-full  border-none px-3 py-1.5 box-border text-base placeholder-white focus:outline-none rounded-2xl"
+        class="w-full text-sm border-none px-3 py-1.5 box-border text-base placeholder-white focus:outline-none rounded-2xl"
         ref="searchInput"
         @keyup.enter="searchPlace"
       />

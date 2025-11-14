@@ -95,31 +95,49 @@
                   <div class="relative" ref="menuRef">
                     <button
                       @click="showCustomCategory = !showCustomCategory"
-                      class="block w-full text-left px-3 py-2 rounded-full hover:bg-gray-600 text-white font-semibold left-3.5"
+                      
+                      class="block w-full text-left px-3 py-2 rounded hover:bg-blue-100 text-white font-semibold left-3.5"
                     >
                       + others
                     </button>
+                  
                     <div
                       v-if="showCustomCategory"
-                      class="absolute z-10 bg-gray-400/90 rounded-4xl p-3 w-80 shadow-md bottom-1 left-18 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
+                      class="max-h-[260px] overflow-y-auto navbar-style fixed z-10 bottom-13 rounded-2xl p-3 w-80 shadow-md mb-4 right-0 md:fixed md:bottom-1 md:left-80 transform transition-all duration-300 ease-in-out translate-x-0 opacity-100"
                     >
                       <button
                         @click="removeCategory(item)"
                         v-for="item in categories"
                         :key="item.type"
-                        class="m-4"
+                        class="m-4 cursor-pointer flex-nowrap"
                       >
                         {{ item.label }} ❌
                       </button>
                       <hr />
-                      <button
-                        @click="addCategory(item)"
+                      <div
                         v-for="item in placeCategories"
                         :key="item.type"
-                        class="m-4 cursor-pointer"
+                        class="relative inline-block md:m-4 m-2"
                       >
-                        {{ item.label }}
-                      </button>
+                        <button
+                          @click="addCategory(item)"
+                          class="cursor-pointer hover:bg-blue-100 rounded px-3 py-2"
+                          @mouseenter="hovered = item.type"
+                          @mouseleave="hovered = null"
+                        >
+                          {{ item.label }}
+                        </button>
+                      
+                        <div
+                          v-show="hovered === item.type"
+                          class="absolute left-1/2 top-full mt-1 -translate-x-1/2  bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow pointer-events-none hidden md:block"
+                        >
+                          {{ item.name }}
+                        </div>
+                        <div class="mt-1 text-xs text-center text-white-600 md:hidden">
+                           {{ item.name }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -329,7 +347,7 @@ const show = ref(true)
 const showMarker1 = ref(false)
 const showMarker2 = ref(false)
 const showMarker3 = ref(false)
-
+const hovered = ref(null);
 const mapImg = ref(null)
 
 const {
@@ -350,7 +368,7 @@ const searchInput = ref(null);
 const hasMoreResults = ref(false);
 const selectedPlace = ref(null);
 const selectedCityName = ref("none");
-const maxCategoryCount = 5;
+const maxCategoryCount = 4;
 
 function searchPlace() {
   if (!searchQuery.value) return;

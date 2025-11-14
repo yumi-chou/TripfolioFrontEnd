@@ -40,9 +40,16 @@ const emitSubmit   = () => safeSubmit();
     <button
       @click="handleSubmit"
       :disabled="!input.trim() || isSubmitting"
-      class="submit-btn whitespace-nowrap px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition disabled:bg-gray-300"
+      class="submit-btn whitespace-nowrap px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition disabled:bg-gray-300 hidden md:block"
     >
       {{ isSubmitting ? "送出中..." : "發表留言" }}
+    </button>
+    <button
+      @click="handleSubmit"
+      :disabled="!input.trim() || isSubmitting"
+      class="submit-btn whitespace-nowrap px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition disabled:bg-gray-300  md:hidden"
+    >
+      {{ isSubmitting ? "送出中" : "➤" }}
     </button>
   </div>
 </template>

@@ -1,57 +1,54 @@
 <template>
-  <div class="comment-section">
-    <!-- <h4>留言區</h4> -->
+  <div class="comment-section flex flex-col h-full ">
 
-    <div v-if="isLoading" class="text-center py-4">載入留言中...</div>
+    <!-- 留言卷動區 -->
+    <div class="comments-list flex-1 md:overflow-y-auto pr-2">
 
-    <!-- 現有留言 -->
-    <div v-else-if="comments.length > 0" class="comments-list overflow-y-auto">
-      <div v-for="comment in comments" :key="comment.id" class="comment-item">
-        <div class="comment-header">
-          <img
-            :src="
-              comment.author?.avatar ||
-              comment.userAvatar ||
-              'https://picsum.photos/40/40?random=1'
-            "
-            :alt="comment.author?.name || comment.userName || '匿名使用者'"
-            class="avatar"
-          />
-          <span class="author-name">
-            {{ comment.author?.name || comment.userName || "匿名使用者" }}
-          </span>
-          <span class="comment-time">{{ formatTime(comment.createdAt) }}</span>
-        </div>
-        <div class="flex justify-between">
-          <p class="comment-content">{{ comment.content }}</p>
-          <button
-            v-if="canDeleteComment(comment)"
-            @click="deleteComment(comment.id)"
-            class="delete-btn cursor-pointer"
-            :disabled="isDeletingComment === comment.id"
-          >
-            {{ isDeletingComment === comment.id ? "刪除中..." : "🗑️" }}
-          </button>
+      <div v-if="isLoading" class="text-center py-4">
+        載入留言中...
+      </div>
+
+      <div v-else-if="comments.length > 0">
+        <div
+          v-for="comment in comments"
+          :key="comment.id"
+          class="comment-item"
+        >
+          <div class="comment-header">
+            <img
+              :src="comment.author?.avatar || comment.userAvatar || 'https://picsum.photos/40/40?random=1'"
+              class="avatar"
+            />
+            <span class="author-name">
+              {{ comment.author?.name || comment.userName || "匿名使用者" }}
+            </span>
+            <span class="comment-time">{{ formatTime(comment.createdAt) }}</span>
+          </div>
+
+          <div class="flex justify-between">
+            <p class="comment-content">{{ comment.content }}</p>
+            <button
+              v-if="canDeleteComment(comment)"
+              @click="deleteComment(comment.id)"
+              class="delete-btn"
+            >
+              🗑️
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-else class="text-center py-4">
-      還沒有留言，成為第一個留言的人吧！
+      <div v-else class="text-center py-4">
+        還沒有留言，成為第一個留言的人吧！
+      </div>
     </div>
-
-    <AddComment
-      :isSubmitting="isSubmitting"
-      @submit="submitComment"
-      class="mt-4 w-[90%]"
-    />
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import AddComment from "../components/AddComment.vue";
 
 const props = defineProps({
   post: {
@@ -203,6 +200,8 @@ const deleteComment = async (commentId) => {
   }
 };
 
+defineExpose({ loadComments });
+
 onMounted(() => {
   loadComments();
 });
@@ -233,13 +232,12 @@ onMounted(() => {
 
 .comments-list {
   max-height: 300px;
-  overflow-y: auto;
   margin-bottom: 1rem;
 }
 .comment-item {
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.3);
 }
 
 .comment-header {
@@ -307,4 +305,15 @@ onMounted(() => {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(215, 215, 215, 0.3); 
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
 </style>

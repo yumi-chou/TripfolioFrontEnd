@@ -1,78 +1,104 @@
 <template>
-  <div class="popup-overlay" @click.self="close">
+  <div class="popup-overlay " @click.self="close">
     <div
-      class="popup-content flex flex-col md:flex-row relative max-h-[90vh] max-w-[100vw] overflow-y-auto rounded-2xl"
+      class="popup-content relative w-[90vw] max-w-[1100px] h-[85vh]
+             rounded-2xl bg-black/40 flex flex-col overflow-hidden"
     >
-      <!-- 左側圖片：手機版為上方 -->
-      <div
-        class="w-full md:w-[55%] h-64 flex-shrink-0 md:h-auto overflow-hidden rounded-tl-2xl md:rounded-tl-2xl md:rounded-bl-2xl"
-      >
-        <img
-          :src="
-            localPost.coverURL ||
-            localPost.imageUrl ||
-            'https://picsum.photos/400/400?random'
-          "
-          alt="貼文照片"
-          class="w-full h-full object-cover"
-        />
-      </div>
-
-      <!-- 右側內容：手機版為下方 -->
-      <div class="post-info w-full md:w-[50%] flex flex-col">
-        <!-- 貼文標題 -->
-        <div class="post-header h-15 flex justify-between items-center px-4">
-          <div class="flex items-center flex-1">
+      <!-- 上半部：圖片＋文字＋留言，一起捲動 -->
+      <div class="flex-1 overflow-y-auto">
+        <div class="flex flex-col md:flex-row h-full">
+          <!-- 左側圖片 -->
+          <div
+            class="w-full md:w-[55%] h-64 md:h-full flex-shrink-0
+                   overflow-hidden rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
+          >
             <img
               :src="
-                authorAvatar ||
-                localPost.authorAvatar ||
-                'https://picsum.photos/40/40?random=1'
+                localPost.coverURL ||
+                localPost.imageUrl ||
+                'https://picsum.photos/400/400?random'
               "
-              class="avatar w-10 h-10 rounded-full mr-3"
-              @error="
-                $event.target.src = 'https://picsum.photos/40/40?random=1'
-              "
+              alt="貼文照片"
+              class="w-full h-full object-cover"
             />
-            <div>
-              <div class="font-semibold">
-                {{ localPost.authorName || "匿名使用者" }}
-              </div>
-              <div class="text-sm">
-                {{ scheduleTitle || "行程已刪除 ಥ_ಥ" }}
+          </div>
+
+          <!-- 右側內容 -->
+          <div class="post-info w-full md:w-[45%] flex flex-col">
+            <!-- 貼文標頭 -->
+            <div class="post-header h-15 flex justify-between items-center px-4 mt-2">
+              <div class="flex items-center flex-1">
+                <img
+                  :src="
+                    authorAvatar ||
+                    localPost.authorAvatar ||
+                    'https://picsum.photos/40/40?random=1'
+                  "
+                  class="avatar w-10 h-10 rounded-full mr-3"
+                  @error="
+                    $event.target.src = 'https://picsum.photos/40/40?random=1'
+                  "
+                />
+                <div>
+                  <div class="font-semibold">
+                    {{ localPost.authorName || "匿名使用者" }}
+                  </div>
+                  <div class="text-sm">
+                    {{ scheduleTitle || "行程已刪除 ಥ_ಥ" }}
+                  </div>
+                </div>
               </div>
             </div>
+
+            <!-- 貼文內容＋留言 捲 -->
+            <div class="flex-1 flex flex-col overflow-hidden">
+              <div class="post-body p-4 border-b">
+                <p class="break-words whitespace-pre-wrap">
+                  {{ localPost.content || "沒有內容" }}
+                </p>
+              </div>
+
+              <CommentSection
+                :post="localPost"
+                ref="commentSectionRef"
+                @comment-added="handleCommentUpdate"
+                class="flex-1"
+              />
+            </div>
+
+            <!-- 桌機版-->
+            <div class="hidden md:flex border-t px-4 py-3 items-center gap-3">
+              <AddComment
+                :isSubmitting="isSubmitting"
+                @submit="submitComment"
+                class="flex-1 mt-0"
+              />
+              <FavoriteButton
+                :postId="localPost.postId"
+                :memberId="getCurrentUserId()"
+                :favoriteCount="localPost.favoriteCount"
+                @favorite-toggled="handleFavoriteToggle"
+                class="shrink-0 mt-3"
+              />
+            </div>
           </div>
-          <!-- <button
-            class="cursor-pointer bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition-colors"
-            @click="toTravelPage"
-          >
-            <p class="text-white text-sm">行程參考</p>
-          </button> -->
         </div>
+      </div>
 
-        <!-- 內容與留言區域 -->
-        <div class="flex-1 flex flex-col overflow-hidden relative">
-          <div class="post-body p-4 border-b">
-            <p class="break-words whitespace-pre-wrap">
-              {{ localPost.content || "沒有內容" }}
-            </p>
-          </div>
-
-          <CommentSection
-            :post="localPost"
-            @comment-added="handleCommentUpdate"
-            class="overflow-auto w-full max-h-[200px]"
-          />
-
-          <FavoriteButton
-            :postId="localPost.postId"
-            :memberId="getCurrentUserId()"
-            :favoriteCount="localPost.favoriteCount"
-            @favorite-toggled="handleFavoriteToggle"
-            class="absolute bottom-5 right-5 sm:bottom-6"
-          />
-        </div>
+      <!-- ✅ 手機版：固定在整張卡片底部 -->
+      <div class="border-t px-4 py-3 flex items-center gap-2 md:hidden">
+        <AddComment
+          :isSubmitting="isSubmitting"
+          @submit="submitComment"
+          class="flex-1 mt-0"
+        />
+        <FavoriteButton
+          :postId="localPost.postId"
+          :memberId="getCurrentUserId()"
+          :favoriteCount="localPost.favoriteCount"
+          @favorite-toggled="handleFavoriteToggle"
+          class="shrink-0 mt-3"
+        />
       </div>
     </div>
   </div>
@@ -84,7 +110,10 @@ import { useRouter } from 'vue-router'
 import axios from "axios";
 import CommentSection from "../components/CommentSection.vue";
 import FavoriteButton from "../components/FavoriteButton.vue";
+import AddComment from "../components/AddComment.vue";
 
+const isSubmitting = ref(false);            // 給 AddComment 用
+const commentSectionRef = ref(null); 
 const router = useRouter()
 
 const props = defineProps({
@@ -207,6 +236,45 @@ const handleFavoriteToggle = (favoriteData) => {
   }
 };
 
+const submitComment = async (commentText) => {
+  if (!commentText.trim()) return;
+  isSubmitting.value = true;
+
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/post/${localPost.value.postId}/comments`,
+      {
+        content: commentText,
+        memberId: getCurrentUserId(),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    );
+
+    if (commentSectionRef.value?.loadComments) {
+      commentSectionRef.value.loadComments();
+    }
+
+    const newCommentCount = (localPost.value.commentCount || 0) + 1;
+
+    handleCommentUpdate({
+      postId: localPost.value.postId,
+      commentCount: newCommentCount,
+    });
+
+    console.log("留言發表成功", response.data);
+  } catch (error) {
+    console.error("留言發表失敗", error);
+    alert("留言發表失敗，請稍後再試");
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+
 const handleCommentUpdate = (commentData) => {
   // 更新本地計數
   if (commentData && commentData.postId === localPost.value.postId) {
@@ -256,7 +324,20 @@ onMounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(111, 111, 111, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+}
+.md-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: 24px;
   display: flex;
   align-items: center;
@@ -264,22 +345,20 @@ onMounted(() => {
   z-index: 40;
 }
 .popup-content {
-  background-color: rgba(50, 50, 50, 0.6); /* 半透明深色背景 */
+  background-color: rgba(50, 50, 50, 0.6); 
   color: #fff;
 
-  /* 毛玻璃背景 */
-  backdrop-filter: blur(8px); /* 可略加強 */
+  backdrop-filter: blur(8px); 
   -webkit-backdrop-filter: blur(8px);
 
-  /* 玻璃邊框 */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* 半透明白邊 */
+  border: 1px solid rgba(255, 255, 255, 0.2); 
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.1); /* 微光暈 */
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 
   /* display: flex; */
-  width: 70%;
+  width: 90%;
   height: 70%;
 }
 /* .post-header {

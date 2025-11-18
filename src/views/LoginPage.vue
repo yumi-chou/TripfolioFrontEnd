@@ -14,7 +14,6 @@
         </span>
       </div>
 
-    <!-- 登入表單 -->
       <form
         v-if="!isLoggedIn"
         @submit.prevent="login"
@@ -44,16 +43,6 @@
 
         <div class="flex justify-center gap-6 mt-4">
 
-          <!-- Google 登入按鈕 -->
-          <!-- <button
-            type="button"
-            @click="handleGoogleLogin"
-            class="p-[10px] border border-[#fff] rounded-full text-[14px] flex items-center justify-center gap-2 hover:bg-white/30 cursor-pointer"
-          >
-            <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5 " />
-            <span  class="text-white px-0.5">使用 Google 登入</span>
-          </button> -->
-
             <button
               type="submit"
               class="w-[100px] bg-black/50 text-white py-2 rounded-full transition mx-auto cursor-pointer hover:bg-white/30"
@@ -74,7 +63,6 @@
         </RouterLink>
       </form>
 
-    <!-- 登入成功畫面 -->
     <div v-else class="mt-6 bg-blue-50 text-center rounded-md shadow-md p-4">
       <p class="text-blue-700 font-semibold mb-4">您已成功登入！</p>
       <button

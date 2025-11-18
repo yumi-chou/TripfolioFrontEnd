@@ -102,7 +102,6 @@
               </ul>
             </div>
           </li>
-          <!-- 每兩個景點之間顯示交通 -->
           <TrafficBetween
             v-if="index < itinerarySpots.length - 1"
             :itinerary-id="selectedTrip.id"
@@ -154,26 +153,22 @@ const openMenuIndex = ref(null);
 
 const trafficMap = ref({});
 
-// 暴露方法給父元件使用
 defineExpose({
   refresh,
 });
 
-//取得目前日期
 const currentDay = computed(() => {
   return selectedTrip.value?.days?.[dayIndex.value] || null;
 });
 
 const itinerarySpots = ref([]);
 
-//更新景點資料
 async function refresh() {
   if (!selectedTrip.value?.id || !currentDay.value?.date) {
     return;
   }
 
   try {
-    // 直接向 API 請求最新資料
     const res = await axios.get(`${API_URL}/itinerary/places`, {
       params: {
         itineraryId: selectedTrip.value.id,
@@ -182,23 +177,20 @@ async function refresh() {
     });
     console.log("更新景點資料：", res.data.places);
 
-    // 直接更新 DailyPlan 的資料
     itinerarySpots.value = res.data.places
       .filter((p) => p.date === currentDay.value.date)
       .sort((a, b) => a.arrivalHour - b.arrivalHour);
 
-    trafficMap.value = itineraryRef.value?.trafficMap || {}; //交通
+    trafficMap.value = itineraryRef.value?.trafficMap || {}; 
   } catch (error) {
     console.error("載入行程失敗", error);
   }
 }
 
-// 元件掛載時載入資料
 onMounted(() => {
   refresh();
 });
 
-// 監聽日期變化時重新載入
 watch(
   () => currentDay.value?.date,
   () => {
@@ -206,7 +198,6 @@ watch(
   },
 );
 
-// 監聽變化時重新載入
 
 watch(
   () => selectedTrip.value,
@@ -224,7 +215,6 @@ function formatTime(hour, minute) {
   return `${String(hour ?? 0).padStart(2, "0")}:${String(minute ?? 0).padStart(2, "0")}`;
 }
 
-//呼叫子層
 function startEditing(p) {
   itineraryRef.value?.startEditing(p);
 }
@@ -241,7 +231,6 @@ function removePlace(p) {
   itineraryRef.value?.removePlace(p);
 }
 
-//更新排序
 function updateOrder() {
   const newOrder = itinerarySpots.value.map((p, i) => ({
     id: p.id,

@@ -385,7 +385,6 @@ const result = ref(null);
 const maxCategoryCount = 4;
 const cardContainer = ref(null);
 
-//css
 function scrollLeft() {
   if (cardContainer.value) {
     cardContainer.value.scrollBy({ left: -300, behavior: "smooth" });
@@ -398,7 +397,6 @@ function scrollRight() {
   }
 }
 
-//import
 function callItinerary() {
   const date = selectedDate.value?.date;
   const place = selectedPlace.value;
@@ -418,7 +416,7 @@ function callItinerary() {
     }
 
     if (props.scheduleDetailRef?.fetchTrip) {
-      props.scheduleDetailRef.fetchTrip(); // 保證 trip.days 最新
+      props.scheduleDetailRef.fetchTrip(); 
     }
 
     alert("成功加入行程！");
@@ -435,7 +433,7 @@ const {
   handleClickOutside,
 } = useCategoryMenu(rawCategories, rawPlaceCategories, maxCategoryCount);
 
-//function
+
 function loadGoogleMaps() {
   return new Promise((resolve, reject) => {
     if (window.google && window.google.maps) {
@@ -617,27 +615,11 @@ function handleResults(results, status, pagination) {
         "name",
         "formatted_address",
         "geometry",
-        // "types",
         "rating",
         "user_ratings_total",
-        // "formatted_phone_number",
-        // "international_phone_number",
         "opening_hours",
         "current_opening_hours",
-        // "secondary_opening_hours",
         "photos",
-        // "reviews",
-        // "price_level",
-        // "website",
-        // "url", //開啟 Google 地圖
-        // "vicinity", //附近描述（適用於搜尋 API，如 "near Taipei 101"）
-        // "address_components",
-        // "adr_address",
-        // "postal_address",
-        // "short_formatted_address",
-        // "business_status",
-        // "icon", // =icon_mask_base_uri + icon_background_color
-        // 其他field欄位參考：https://developers.google.com/maps/documentation/places/web-service/legacy/details?hl=zh-tw#fields
       ],
     };
 
@@ -707,11 +689,6 @@ function calculateRoute(origin, destination) {
   );
 }
 
-// function recalculateRoute() {
-//   if (markers.length === 2) {
-//     calculateRoute(markers[0].getPosition(), markers[1].getPosition());
-//   }
-// }
 
 function onCityChange(event) {
   searchQuery.value = "";
@@ -884,64 +861,7 @@ onMounted(async () => {
         location: map.value.getCenter(),
       });
     }
-    // map.value.addListener("click", (event) => {
-    //   markers.forEach((marker) => marker.setMap(null));
-    //   markers = [];
-    //   placeDetails.value = [];
-    //   nextPageFunc.value = null;
-    //   hasMoreResults.value = false;
 
-    //   if (event.placeId) {
-    //     event.stop();
-    //     const placeId = event.placeId;
-    //     const detailRequest = {
-    //       placeId,
-    //       fields: [
-    //         "name",
-    //         "formatted_address",
-    //         "geometry",
-    //         "rating",
-    //         "user_ratings_total",
-    //         "photos",
-    //         "business_status",
-    //         "icon",
-    //       ],
-    //     };
-
-    //     service.getDetails(detailRequest, (detailResult, detailStatus) => {
-    //       if (detailStatus === google.maps.places.PlacesServiceStatus.OK) {
-    //         if (selectedMarkers.length === 2) {
-    //           selectedMarkers.forEach((m) => m.setMap(null));
-    //           selectedMarkers.length = 0;
-    //           selectedPlace.value = null;
-    //           if (directionsRenderer)
-    //             directionsRenderer.setDirections({ routes: [] });
-    //         }
-
-    //         const marker = new google.maps.Marker({
-    //           position: detailResult.geometry.location,
-    //           map: map.value,
-    //           title: detailResult.name,
-    //         });
-    //         selectedMarkers.push(marker);
-
-    //         if (selectedMarkers.length === 1) {
-    //           selectedPlace.value = detailResult;
-    //         } else if (selectedMarkers.length === 2) {
-    //           selectedPlace.value = null;
-    //           calculateRoute(
-    //             selectedMarkers[0].getPosition(),
-    //             selectedMarkers[1].getPosition(),
-    //           );
-    //         }
-    //       } else {
-    //         alert("取得詳細資料失敗", detailStatus);
-    //       }
-    //     });
-    //   } else {
-    //     alert("點擊了非place地點");
-    //   }
-    // });
   map.value.addListener("click", (event) => {
   if (!event.placeId) return;
 

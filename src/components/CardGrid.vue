@@ -21,7 +21,6 @@
         <div
           class="absolute inset-0 bg-opacity-20 flex justify-end items-start p-2 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <!-- 預留 hover 操作 -->
         </div>
       </div>
       <div class="p-4">
@@ -44,6 +43,4 @@ const handleImageError = (e) => {
 };
 </script>
 
-<style scoped>
-/* 可依需要客製 hover 效果或動態高度 */
-</style>
+

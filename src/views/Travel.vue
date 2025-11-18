@@ -1,7 +1,6 @@
 <template>
   <div class="homepage-bg relative">
     <div class="flex flex-col lg:flex-row h-screen">
-      <!-- 左側：可放地圖或其他內容 -->
       <div
         class="h-[65%] lg:h-full lg:w-4/6 relative overflow-hidden mb-2 shadow-2xl"
       >
@@ -19,7 +18,6 @@
         </div>
       </div>
 
-      <!-- 右側：行程列表區-->
       <div class="flex-1 lg:w-2/6 h-[45%] lg:h-full overflow-y-auto">
         <div v-if="!editingTripId" class="fixed bottom-5 right-6 z-50">
           <button
@@ -30,7 +28,6 @@
           </button>
         </div>
 
-        <!-- 行程卡片列表 -->
         <div>
           <div v-if="!editingTripId" class="rounded-2xl p-7 m-5">
             <div
@@ -71,7 +68,6 @@
             <div v-else class="text-gray-400 text-center">尚未建立任何行程</div>
           </div>
 
-          <!-- 編輯行程 -->
           <ScheduleDetail
             v-else
             :trip-id="editingTripId"
@@ -84,7 +80,6 @@
         </div>
       </div>
 
-      <!-- 彈出建立行程表單 -->
       <div
         v-if="showForm"
         class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 overflow-auto p-4"
@@ -94,7 +89,6 @@
         </div>
       </div>
 
-      <!-- 付款提醒Modal -->
       <PaymentModal
         v-if="showPayModal"
         :result="payResult"
@@ -136,7 +130,6 @@ const selectedTrip = computed(() => {
   return tripStore.trips.find((t) => t.id === editingTripId.value);
 });
 
-//取得會員是否為付費會員
 const fetchIsPremium = async () => {
   const token = localStorage.getItem("token");
 
@@ -146,11 +139,10 @@ const fetchIsPremium = async () => {
     });
     isPremium.value = res.data.isPremium;
   } catch (err) {
-    // eslint-disable-next-line no-empty
+    console.error("無法取得會員資料");
   }
 };
 
-//首次載入取得行程
 onMounted(() => {
   if (checkLoginStatus()) {
     tripStore.fetchTrips();
@@ -171,7 +163,6 @@ onMounted(() => {
   }
 });
 
-//建立行程時檢查是否登入
 const handleOpenForm = () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -193,7 +184,6 @@ const goToPay = () => {
   router.push("/payment");
 };
 
-//事件處理函式
 function handlePlaceAdded() {
   if (scheduleDetailRef.value?.refreshDailyPlan) {
     scheduleDetailRef.value.refreshDailyPlan();
@@ -201,24 +191,20 @@ function handlePlaceAdded() {
 }
 
 function refreshDailyPlan() {
-  // 呼叫 DailyPlan 的 refresh 方法
   dailyPlanRef.value?.refresh?.();
 }
 
-//表單關閉後刷新行程列表
 const handleCloseForm = () => {
   showForm.value = false;
   tripStore.fetchTrips();
   fetchIsPremium();
 };
 
-//返回總覽同步更新
 const handleCloseDetail = () => {
   editingTripId.value = null;
   tripStore.fetchTrips();
 };
 
-//刪除行程
 const deleteSchedule = async (id) => {
   const confirmed = confirm("確定刪除這個行程嗎?");
   if (!confirmed) return;
@@ -248,7 +234,6 @@ function callItinerary() {
   mapRef.value?.callItinerary();
 }
 
-// 暴露方法給父元件使用
 defineExpose({
   refreshDailyPlan,
   dailyPlanRef,

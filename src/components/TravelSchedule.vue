@@ -121,13 +121,6 @@
       </div>
 
       <div class="flex justify-end gap-2">
-        <!-- <button
-          type="button"
-          @click="scheduleCancel"
-          class="bg-gray-300 hover:bg-gray-200 px-4 py-2 rounded"
-        >
-          取消
-        </button> -->
         <button
           type="submit"
           :disabled="isLoading"
@@ -135,9 +128,6 @@
         >
           <span v-if="isLoading" class="flex items-center gap-2">
             儲存中...
-            <!-- <span
-              class="inline-block animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"
-            ></span> -->
           </span>
           <span v-else>建立</span>
         </button>

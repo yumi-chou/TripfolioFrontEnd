@@ -39,7 +39,7 @@ const isLoading = ref(false);
 const checkFavoriteStatus = async () => {
   try {
     const token = localStorage.getItem("token");
-    if (!token || !props.memberId) return; // 沒登入就不查詢
+    if (!token || !props.memberId) return; 
 
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/favorites/check/${props.postId}/${props.memberId}`,
@@ -61,13 +61,12 @@ const toggleFavorite = async () => {
   if (!token) {
     alert("請先登入");
     router.push("/login");
-    return; // ✅ 沒登入就中斷
+    return; 
   }
 
   isLoading.value = true;
   try {
     if (isFavorited.value) {
-      // 取消收藏
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/favorites/${props.postId}`,
         {
@@ -83,7 +82,6 @@ const toggleFavorite = async () => {
         favoriteCount: Math.max(0, props.favoriteCount - 1),
       });
     } else {
-      // 新增收藏
       await axios.post(
         `${import.meta.env.VITE_API_URL}/favorites`,
         {

@@ -2,14 +2,10 @@
   <div
     class="homepage-bg min-h-screen w-full flex items-center justify-center relative overflow-hidden"
   >
-    <!-- 背景動畫層 -->
     <div class="animated-gradient absolute inset-0 -z-10"></div>
-
-    <!-- 表單區 -->
     <div
       class="postform-style mt-30 shadow-xl p-8 rounded-3xl w-full max-w-xl flex flex-col gap-6"
     >
-      <!-- 行程選擇 -->
       <div>
         <label class="block text-lg font-medium mb-2 text-center"
           >選擇行程</label
@@ -30,7 +26,6 @@
         </select>
       </div>
 
-      <!-- 主圖上傳 -->
       <div>
         <label class="block text-lg font-medium mb-2">貼文主圖</label>
         <p>（請上傳 JPG、PNG，檔案最高3MB）</p>
@@ -52,7 +47,6 @@
         </div>
       </div>
 
-      <!-- 內容 -->
       <div>
         <label class="block text-lg font-medium mb-2">貼文內容（可選填）</label>
         <textarea
@@ -62,7 +56,6 @@
         />
       </div>
 
-      <!-- 送出 -->
       <button
         @click="submitPost"
         class="mt-4 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition"
@@ -143,7 +136,6 @@ async function submitPost() {
   formData.append("scheduleId", selectedScheduleId.value);
   formData.append("content", content.value);
 
-  // 添加行程 title
   if (selected) {
     formData.append("scheduleTitle", selected.title);
   }

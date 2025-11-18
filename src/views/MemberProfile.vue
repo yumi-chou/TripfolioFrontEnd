@@ -2,36 +2,8 @@
   <div
     class="solo-card-style rounded-2xl p-6 sm:p-8 w-full max-w-xl text-gray-800 space-y-6 max-h-[80vh] overflow-y-auto"
   >
-    <!-- 標題 -->
     <h2 class="text-2xl font-semibold text-center text-white">會員資料修改</h2>
 
-    <!-- 頭像區塊 -->
-    <!-- <div class="flex justify-center">
-      <div class="relative w-24 h-24">
-        <img
-          v-if="!showCropper && (previewUrl || profileData.avatar)"
-          :src="previewUrl || profileData.avatar"
-          class="w-full h-full rounded-full object-cover border-4 border-gray-200"
-          alt="大頭貼"
-        />
-        <label
-          for="avatar-upload"
-          class="absolute bottom-1 right-1 bg-white border rounded-full p-2 cursor-pointer shadow hover:bg-gray-100"
-          title="更換大頭貼"
-        >
-          <font-awesome-icon :icon="['fas', 'pen-to-square']" />
-        </label>
-        <input
-          type="file"
-          id="avatar-upload"
-          @change="uploadAvatar"
-          accept="image/*"
-          class="hidden"
-        />
-      </div>
-    </div> -->
-
-    <!-- 裁切器 -->
     <div
       v-if="showCropper"
       class="fixed inset-0 bg-white/80 flex flex-col items-center justify-center z-50"
@@ -50,7 +22,6 @@
       </button>
     </div>
 
-    <!-- 基本資料表單 -->
     <form @submit.prevent="saveProfile" class="space-y-2">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
@@ -107,7 +78,6 @@
       </div>
     </form>
 
-    <!-- 密碼區 -->
     <div>
       <h2 class="text-xl font-bold mt-6 mb-4 text-center">密碼修改</h2>
       <form @submit.prevent="changePassword" class="space-y-4">
@@ -184,7 +154,6 @@ import dayjs from "dayjs";
 
 const emit = defineEmits(["close-modal", "profile-updated"]);
 
-//確認會員token
 const token = localStorage.getItem("token");
 if (!token) {
   alert("請先登入會員");
@@ -199,7 +168,6 @@ const profileData = ref({
   avatar: "",
 });
 
-//元件掛載時載入會員資料
 onMounted(async () => {
   try {
     const res = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
@@ -209,7 +177,7 @@ onMounted(async () => {
     });
     const data = res.data;
 
-    //生日時區
+
     if (data.birthday) {
       data.birthday = dayjs(data.birthday).format("YYYY-MM-DD");
     }
@@ -219,7 +187,7 @@ onMounted(async () => {
       avatar: data.avatar || "",
     };
   } catch (error) {
-    // eslint-disable-next-line no-empty
+    alert("無法取得會員資料，請稍後再試");
   }
 });
 
@@ -228,7 +196,6 @@ const previewUrl = ref("");
 const cropperRef = ref(null);
 const showCropper = ref(false);
 
-//上傳大頭貼裁切預覽
 const uploadAvatar = (event) => {
   const file = event.target.files[0];
   if (!file) return;
@@ -237,8 +204,6 @@ const uploadAvatar = (event) => {
   showCropper.value = true;
 };
 
-
-//儲存大頭貼傳至後端
 const saveAvatar = async () => {
   const canvas = cropperRef.value.getResult().canvas;
   if (!canvas) {
@@ -285,7 +250,6 @@ const saveAvatar = async () => {
 
 const phoneError = ref("");
 
-//手機號碼格式檢查
 watch(
   () => profileData.value.phone,
   (newPhone) => {
@@ -298,7 +262,6 @@ watch(
   },
 );
 
-//儲存會員資料送去資料庫
 const saveProfile = async () => {
   try {
     const res = await axios.put(
@@ -332,7 +295,6 @@ const showOld = ref(false);
 const showNew = ref(false);
 const showConfirm = ref(false);
 
-//新密碼格式檢查
 watch(
   () => passwordData.value.newPassword,
   (newPwd) => {
@@ -355,7 +317,6 @@ watch(
   },
 );
 
-//修改密碼送到後端
 const changePassword = async () => {
   if (
     !passwordData.value.oldPassword ||

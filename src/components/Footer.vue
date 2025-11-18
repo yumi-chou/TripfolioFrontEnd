@@ -5,7 +5,6 @@
 				&copy; {{ currentYear }} TRIPFOLIO. All rights reserved.
 			</div>
 
-			<!-- 連結區域 -->
 			<div class="flex flex-wrap justify-center sm:justify-end space-x-4">
 				<RouterLink to="/privacy-policy" class="hover:text-white transition-colors duration-200 text-sm">
 					隱私權政策
@@ -23,7 +22,6 @@
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router'; 
 
-// 計算當前年份，用於版權資訊
 const currentYear = computed(() => new Date().getFullYear());
 </script>
 

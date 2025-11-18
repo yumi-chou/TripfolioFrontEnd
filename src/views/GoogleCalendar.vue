@@ -48,7 +48,7 @@ import { ref, onMounted } from "vue";
 
 const message = ref("");
 const eventLink = ref("");
-const loading = ref(false); //避免使用者重複請求
+const loading = ref(false); 
 const isLink = ref(false);
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -62,7 +62,6 @@ let accessToken = null;
 let gapiInitialized = false;
 
 onMounted(() => {
-  // 載入 gapi
   const gapiScript = document.createElement("script");
   gapiScript.src = "https://apis.google.com/js/api.js";
   gapiScript.onload = () => {
@@ -71,7 +70,6 @@ onMounted(() => {
   };
   document.body.appendChild(gapiScript);
 
-  // 載入 Google Identity Services (GIS) 的 script
   const gisScript = document.createElement("script");
   gisScript.src = "https://accounts.google.com/gsi/client";
   document.body.appendChild(gisScript);
@@ -126,12 +124,11 @@ function handleAuthClick() {
 
 function createTestEvent() {
   if (import.meta.env.MODE !== "development") {
-    return; // 僅在開發模式下執行
+    return;
   }
   const startDate = new Date("2025-08-01T10:00:00+08:00");
   const endDate = new Date("2025-08-01T11:00:00+08:00");
 
-  // 時區 ISO 格式
   createEvent("測試行程", startDate.toISOString(), endDate.toISOString());
 }
 

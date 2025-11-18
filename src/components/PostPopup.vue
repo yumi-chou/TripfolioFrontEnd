@@ -4,10 +4,8 @@
       class="popup-content relative w-[90vw] max-w-[1100px] h-[85vh]
              rounded-2xl bg-black/40 flex flex-col overflow-hidden"
     >
-      <!-- 上半部：圖片＋文字＋留言，一起捲動 -->
       <div class="flex-1 overflow-y-auto">
         <div class="flex flex-col md:flex-row h-full">
-          <!-- 左側圖片 -->
           <div
             class="w-full md:w-[55%] h-64 md:h-full flex-shrink-0
                    overflow-hidden rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
@@ -23,9 +21,7 @@
             />
           </div>
 
-          <!-- 右側內容 -->
           <div class="post-info w-full md:w-[45%] flex flex-col">
-            <!-- 貼文標頭 -->
             <div class="post-header h-15 flex justify-between items-center px-4 mt-2">
               <div class="flex items-center flex-1">
                 <img
@@ -50,7 +46,6 @@
               </div>
             </div>
 
-            <!-- 貼文內容＋留言 捲 -->
             <div class="flex-1 flex flex-col overflow-hidden">
               <div class="post-body p-4 border-b">
                 <p class="break-words whitespace-pre-wrap">
@@ -66,7 +61,6 @@
               />
             </div>
 
-            <!-- 桌機版-->
             <div class="hidden md:flex border-t px-4 py-3 items-center gap-3">
               <AddComment
                 :isSubmitting="isSubmitting"
@@ -85,7 +79,6 @@
         </div>
       </div>
 
-      <!-- ✅ 手機版：固定在整張卡片底部 -->
       <div class="border-t px-4 py-3 flex items-center gap-2 md:hidden">
         <AddComment
           :isSubmitting="isSubmitting"
@@ -112,7 +105,7 @@ import CommentSection from "../components/CommentSection.vue";
 import FavoriteButton from "../components/FavoriteButton.vue";
 import AddComment from "../components/AddComment.vue";
 
-const isSubmitting = ref(false);            // 給 AddComment 用
+const isSubmitting = ref(false);            
 const commentSectionRef = ref(null); 
 const router = useRouter()
 
@@ -138,7 +131,6 @@ const emit = defineEmits(["close", "update-post"]);
 const scheduleTitle = ref("未命名行程");
 const authorAvatar = ref("");
 
-// 本地 post 狀態，會隨著操作而更新
 const localPost = ref({ ...props.post });
 
 const close = () => {
@@ -150,17 +142,9 @@ const toTravelPage = () => {
   router.push({ name: 'scheduledetail', params: { id: props.scheduleId } })
 };
 
-// 獲取行程 title
 const fetchScheduleTitle = async () => {
   if (props.post.title) {
     try {
-      // const res = await axios.get(
-      //   `${import.meta.env.VITE_API_URL}/travelSchedule/${props.post.title}`,
-      //   {
-      //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      //   },
-      // );
-
       scheduleTitle.value = props.post.title || "未命名行程";
     } catch (error) {
       scheduleTitle.value = props.post.title;
@@ -170,7 +154,6 @@ const fetchScheduleTitle = async () => {
   }
 };
 
-// 格式化時間
 const formatTime = (timeString) => {
   if (!timeString) return "";
   const date = new Date(timeString);
@@ -186,18 +169,14 @@ const formatTime = (timeString) => {
 
 const refreshPost = async () => {
   try {
-    // 嘗試獲取最新的貼文資訊
     const res = await axios.get(
       `${import.meta.env.VITE_API_URL}/allposts/${props.post.postId}`,
     );
 
-    // 通知父組件更新列表中顯示的計數
     emit("update-post", res.data.post || res.data);
   } catch (error) {
     console.error("更新貼文資訊失敗，嘗試手動更新計數", error);
 
-    // 如果 API 端點不存在，我們可以手動更新計數
-    // 這裡可以根據實際情況調整
     const updatedPost = {
       postId: props.post.postId,
       commentCount: props.post.commentCount,
@@ -221,15 +200,11 @@ const getCurrentUserId = () => {
 };
 
 const handleFavoriteToggle = (favoriteData) => {
-  // 更新本地計數
   if (favoriteData && favoriteData.postId === localPost.value.postId) {
-    // 更新本地狀態
     localPost.value = {
       ...localPost.value,
       favoriteCount: favoriteData.favoriteCount,
     };
-
-    // 通知父組件更新
     emit("update-post", localPost.value);
 
     console.log(`收藏計數更新: ${favoriteData.favoriteCount}`);
@@ -276,29 +251,23 @@ const submitComment = async (commentText) => {
 
 
 const handleCommentUpdate = (commentData) => {
-  // 更新本地計數
   if (commentData && commentData.postId === localPost.value.postId) {
-    // 更新本地狀態
     localPost.value = {
       ...localPost.value,
       commentCount: commentData.commentCount,
     };
 
-    // 通知父組件更新
     emit("update-post", localPost.value);
 
     console.log(`留言計數更新: ${commentData.commentCount}`);
   }
 };
 
-// 監聽 post 變化，重新獲取行程 title
 watch(
   () => props.post,
   (newPost) => {
-    // 更新本地 post 狀態
     localPost.value = { ...newPost };
     fetchScheduleTitle();
-    // 獲取發文者頭貼
     if (newPost.memberId || newPost.authorId || newPost.userId) {
       fetchAuthorAvatar(newPost.memberId || newPost.authorId || newPost.userId);
     }
@@ -308,7 +277,6 @@ watch(
 
 onMounted(() => {
   fetchScheduleTitle();
-  // 獲取發文者頭貼
   if (props.post.memberId || props.post.authorId || props.post.userId) {
     fetchAuthorAvatar(
       props.post.memberId || props.post.authorId || props.post.userId,
@@ -357,33 +325,10 @@ onMounted(() => {
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     0 0 0 1px rgba(255, 255, 255, 0.1);
 
-  /* display: flex; */
   width: 90%;
   height: 70%;
 }
-/* .post-header {
-  width: 100%;
-  height: 10px;
-  background-color: red;
-} */
-/* .post-image {
-  flex: 1;
-  background: #0ff376;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-/* .post-image img {
-  max-width: 90%;
-  max-height: 90%;
-} */
-/* .post-info {
-  background-color: bisque;
-  flex: 1;
-  padding: 24px;
-  display: flex;
-  flex-direction: column; 
-} */
+
 .avatar {
   width: 40px;
   height: 40px;
@@ -403,8 +348,4 @@ onMounted(() => {
   font-weight: bold;
   margin-right: 6px;
 }
-/* .comments-section {
-  margin-top: 20px;
-  flex: 1;
-} */
 </style>

@@ -44,7 +44,6 @@ const error = ref("");
 const trip = ref({});
 const joined = ref(false);
 
-// 取得邀請資訊
 const fetchInviteInfo = async () => {
   try {
     const res = await axios.get(
@@ -63,7 +62,6 @@ const fetchInviteInfo = async () => {
   }
 };
 
-// 點擊加入共編
 const acceptShare = async () => {
   try {
     await axios.post(

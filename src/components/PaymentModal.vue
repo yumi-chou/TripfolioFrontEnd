@@ -6,7 +6,6 @@
         class="absolute top-3 right-3 text-white hover:text-black text-2xl"
       >×</button>
 
-      <!-- 付款結果訊息 -->
       <div v-if="result === 'success'" class="text-center  text-white p-6 rounded">
         <h2 class="text-2xl font-bold mb-2">付款成功</h2>
         <p class="text-white mb-4">感謝您的購買！您的付款已成功處理。</p>
@@ -23,7 +22,6 @@
         </button>
       </div>
 
-      <!-- 主付款表單 -->
       <div v-else>
         <h1 class="text-2xl font-bold mb-4 text-center text-white">升級為付費會員</h1>
         <p class="mb-6 text-center text-white">

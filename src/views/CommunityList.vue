@@ -19,7 +19,7 @@ const selectedPost = ref(null);
 let observer = null;
 const defaultImage = `https://picsum.photos/`;
 
-// 分頁載入貼文，append 並保留互動欄位
+
 const fetchPosts = async () => {
   if (isLoading.value || !hasMore.value) return;
   isLoading.value = true;
@@ -32,7 +32,7 @@ const fetchPosts = async () => {
       hasMore.value = false;
     }
 
-    // append 並保留互動欄位
+
     posts.value.push(
       ...fetched.map((post) => ({
         ...post,
@@ -53,10 +53,8 @@ const fetchPosts = async () => {
 const updatePost = (updatedPost) => {
   const index = posts.value.findIndex((p) => p.postId === updatedPost.postId);
   if (index !== -1) {
-    // 只更新有值的欄位，避免覆蓋原有的計數
     const updateData = { ...posts.value[index] };
 
-    // 只更新有值的計數欄位
     if (updatedPost.commentCount !== undefined) {
       updateData.commentCount = updatedPost.commentCount;
     }
@@ -64,7 +62,6 @@ const updatePost = (updatedPost) => {
       updateData.favoriteCount = updatedPost.favoriteCount;
     }
 
-    // 更新其他欄位（如果有）
     Object.keys(updatedPost).forEach((key) => {
       if (
         key !== "commentCount" &&
@@ -115,7 +112,6 @@ const initObserver = () => {
   }
 };
 
-//動態追蹤用
 watch(
   () => route.query.postId,
   (newPostId) => {
@@ -157,8 +153,6 @@ console.log("communityList mounted");
 <template>
   <div class="homepage-bg min-h-screen w-full">
     <div class="px-4 py-6 max-w-5xl mx-auto">
-      <!-- <h1 class="text-2xl font-bold mb-4">社群主頁</h1> -->
-      <!-- 貼文列表 -->
       <div class="grid gap-4 grid-cols-1 sm:grid-cols-4 lg:grid-cols-4 mt-20">
         <div
           v-for="post in posts"
@@ -166,7 +160,6 @@ console.log("communityList mounted");
           class="navbar-style rounded-[24px] overflow-hidden shadow hover:shadow-lg transition cursor-pointer flex flex-col"
           @click="openPostDetail(post)"
         >
-          <!-- Header -->
           <div class="flex items-center gap-2 p-2">
             <img
               :src="post.authorAvatar || 'https://picsum.photos/36/36?random=1'"
@@ -179,7 +172,6 @@ console.log("communityList mounted");
             <span class="text-sm">{{ post.authorName || "User Name" }}</span>
           </div>
 
-          <!-- Image -->
           <img
             :src="
               post.previewImage ||
@@ -191,7 +183,6 @@ console.log("communityList mounted");
             class="w-full aspect-square object-cover"
           />
 
-          <!-- Footer -->
           <div class="p-2 flex flex-col justify-between flex-grow">
             <p class="font-medium truncate">{{ post.content }}</p>
             <div
@@ -212,7 +203,6 @@ console.log("communityList mounted");
 
       <div ref="scrollTrigger" class="h-10"></div>
 
-      <!-- Skeleton loading（載入中顯示） -->
       <div
         v-if="isLoading"
         class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"

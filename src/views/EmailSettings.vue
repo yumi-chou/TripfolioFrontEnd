@@ -47,7 +47,7 @@ const fetchPreferences = async () => {
 
     if (!token) {
       alert("尚未登入，無法載入偏好設定。");
-      return; // 提早結束
+      return; 
     }
 
     const { data } = await axios.get(

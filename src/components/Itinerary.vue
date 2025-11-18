@@ -33,12 +33,10 @@ onBeforeUnmount(() => {
   window.removeEventListener("click", onClickOutside);
 });
 
-//日期變了重新載入清單
 watch(selectedDate, () => {
   loadItinerary();
 });
 
-//向後端請求景點資料
 async function loadItinerary() {
   try {
     if (!tripId.value || !selectedDate.value) return;
@@ -48,22 +46,19 @@ async function loadItinerary() {
     itineraryPlaces.value = res.data.places
       .filter((p) => p.date === selectedDate.value)
       .sort((a, b) => a.arrivalHour - b.arrivalHour);
-    await fetchTrafficData(); //撈「交通資料」
-    emit("refresh", itineraryPlaces.value); // ← 這行通知父層
+    await fetchTrafficData(); 
+    emit("refresh", itineraryPlaces.value); 
   } catch (error) {
     alert("載入行程失敗");
   }
 }
 
-//景點選單順序
 const openMenuIndex = ref(null);
 
-//控制景點選單開關
 const toggleMenu = (index) => {
   openMenuIndex.value = openMenuIndex.value === index ? null : index;
 };
 
-// 全域點擊事件處理
 function onClickOutside(e) {
   if (!e.target.closest(".button-list") && !e.target.closest(".menu-list")) {
     openMenuIndex.value = null;
@@ -80,12 +75,10 @@ function cancelEditing(p) {
   p.editingTime = false;
 }
 
-//制定時間規格
 function formatTime(hour, minute) {
   return `${String(hour ?? 0).padStart(2, "0")}:${String(minute ?? 0).padStart(2, "0")}`;
 }
 
-//確認更改時間
 async function confirmTime(p) {
   const newTime = p.arrivalHourTemp * 60 + p.arrivalMinuteTemp;
   const hasConflict = itineraryPlaces.value.some(
@@ -112,7 +105,6 @@ async function confirmTime(p) {
   }
 }
 
-//更新順序
 async function updateOrder() {
   const newOrder = itineraryPlaces.value.map((p, i) => ({
     id: p.id,
@@ -129,7 +121,6 @@ async function updateOrder() {
   }
 }
 
-//加入景點
 async function addPlace(place, date) {
   if (!place || !date) {
     alert("請選擇地點與日期");
@@ -171,7 +162,6 @@ async function addPlace(place, date) {
   }
 }
 
-//移除景點
 async function removePlace(p) {
   try {
     const res = await axios.delete(`${API_URL}/itinerary/place`, {
@@ -190,7 +180,6 @@ async function removePlace(p) {
   }
 }
 
-//交通資料
 async function fetchTrafficData() {
   try {
     const res = await axios.get(`${API_URL}/traffic/get-all-traffic`, {

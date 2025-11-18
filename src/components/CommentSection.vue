@@ -1,7 +1,6 @@
 <template>
   <div class="comment-section flex flex-col h-full ">
 
-    <!-- 留言卷動區 -->
     <div class="comments-list flex-1 md:overflow-y-auto pr-2">
 
       <div v-if="isLoading" class="text-center py-4">
@@ -61,15 +60,13 @@ const emit = defineEmits(["comment-added"]);
 const comments = ref([]);
 const isSubmitting = ref(false);
 const isLoading = ref(false);
-const isDeletingComment = ref(null); // 追蹤正在刪除的留言 ID
+const isDeletingComment = ref(null);
 
-// 取得目前使用者 ID
 const getCurrentUserId = () => {
   const token = localStorage.getItem("token");
   if (token) {
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      // 根據實際 payload key 調整
       return payload.userId || payload.id || payload.memberId || null;
     } catch (error) {
       console.error("解析 token 失敗:", error);
@@ -92,10 +89,8 @@ const submitComment = async (commentText) => {
     );
     comments.value.unshift(response.data);
 
-    // 更新本地計數
     const newCommentCount = (props.post.commentCount || 0) + 1;
 
-    // 發送詳細的更新資訊
     emit("comment-added", {
       postId: props.post.postId,
       commentCount: newCommentCount,
@@ -145,7 +140,6 @@ const loadComments = async () => {
 
 const canDeleteComment = (comment) => {
   const currentUserId = getCurrentUserId();
-  // 只有本人可以刪除
   return comment.memberId === currentUserId;
 };
 
@@ -168,15 +162,12 @@ const deleteComment = async (commentId) => {
       },
     );
 
-    // 從本地陣列中移除已刪除的留言
     comments.value = comments.value.filter(
       (comment) => comment.id !== commentId,
     );
 
-    // 更新本地計數
     const newCommentCount = Math.max(0, (props.post.commentCount || 0) - 1);
 
-    // 發送詳細的更新資訊
     emit("comment-added", {
       postId: props.post.postId,
       commentCount: newCommentCount,
@@ -190,7 +181,6 @@ const deleteComment = async (commentId) => {
       alert("您沒有權限刪除此留言");
     } else if (error.response?.status === 404) {
       alert("留言不存在或已被刪除");
-      // 從本地陣列中移除不存在的留言
       comments.value = comments.value.filter(
         (comment) => comment.id !== commentId,
       );
@@ -216,7 +206,7 @@ onMounted(() => {
 
   .comment-time {
     width: 100%;
-    margin-left: 40px; /* avatar 寬度對齊 */
+    margin-left: 40px; 
   }
 
   .submit-btn {

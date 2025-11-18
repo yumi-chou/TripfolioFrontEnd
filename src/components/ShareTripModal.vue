@@ -2,7 +2,6 @@
   <div class="bg-white p-6 rounded-xl shadow-md w-full max-w-md mx-auto">
     <div class="flex border-b mb-4">邀請共編</div>
     <div>
-      <!-- 權限選單 -->
       <div class="relative mb-4">
         <button
           @click="togglePermissionDropdown"
@@ -21,8 +20,6 @@
             <path d="M6 9l6 6 6-6" />
           </svg>
         </button>
-
-        <!-- Dropdown -->
         <ul
           v-if="showDropdown"
           class="absolute z-10 bg-white w-full mt-1 border border-gray-200 rounded-md shadow"
@@ -42,7 +39,6 @@
         </ul>
       </div>
 
-      <!-- QRCode + 說明 -->
       <div v-if="shareUrl" class="flex flex-col items-center space-y-3 my-4">
         <qrcode-vue :value="shareUrl" :size="160" />
         <p class="text-sm text-gray-500 text-center leading-snug">
@@ -50,7 +46,6 @@
         </p>
       </div>
 
-      <!-- 複製按鈕 -->
       <button
         @click="copyToClipboard"
         class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
@@ -58,7 +53,6 @@
         複製連結
       </button>
 
-      <!-- 成員清單 -->
       <div class="mt-6">
         <h3 class="text-base font-semibold mb-2">共編成員</h3>
         <ul class="space-y-3 max-h-60 overflow-y-auto">
@@ -79,7 +73,6 @@
             </div>
 
             <div class="flex items-center space-x-2">
-              <!-- 權限下拉 -->
               <select
                 v-model="member.permission"
                 class="border rounded-md px-2 py-1 text-sm"
@@ -88,8 +81,6 @@
                 <option value="editor">可編輯</option>
                 <option value="viewer">僅供檢視</option>
               </select>
-
-              <!-- 刪除按鈕 -->
               <button
                 @click="removeMember(member)"
                 class="text-red-500 hover:text-red-700 disabled:opacity-30"
@@ -156,8 +147,6 @@ const copyToClipboard = async () => {
   }
 };
 
-// 共編成員功能區
-
 const fetchMembers = async () => {
   try {
     const res = await axios.get(
@@ -167,7 +156,7 @@ const fetchMembers = async () => {
       token: item.token,
       permission: item.permission,
       name: item.name || "未知使用者",
-      avatarUrl: item.avatar, // 頭像須從user資料取得
+      avatarUrl: item.avatar, 
     }));
   } catch (err) {
     alert("取得共編成員失敗。");

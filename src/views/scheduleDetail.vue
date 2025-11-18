@@ -6,9 +6,7 @@
         : 'px-0 py-6 w-full grid lg:grid-cols-1 max-w-7xl mx-auto gap-6'
     "
   >
-    <!-- 左側：行程總覽＋每日行程 -->
     <div class="w-full max-w-lg mx-auto">
-      <!-- 行程總覽卡片 -->
       <TripOverview
         v-if="trip"
         :trip="trip"
@@ -20,7 +18,6 @@
         @update-notes="updateNotes"
         @update-dates="updateDates"
       />
-      <!-- 日期切換按鈕 -->
 
       <div
         v-if="trip && trip.days?.length"
@@ -42,7 +39,6 @@
           </button>
         </div>
       </div>
-      <!-- 每日計畫 -->
       <DailyPlan
         v-if="trip && currentDayIndex !== null"
         :selected-trip="trip"
@@ -53,16 +49,7 @@
       />
     </div>
 
-    <!-- 右側：景點清單 -->
     <div class="lg:col-span-1 w-[80%] mx-auto">
-      <!-- <Itinerary
-        v-if="tripLoaded && trip?.id && currentDayIndex !== null"
-        :trip-id="trip.id"
-        :selected-date="trip.days[currentDayIndex].date"
-        :default-image="'/images/default.jpg'"
-        @refresh="handleItineraryRefresh"
-        ref="itineraryRef"
-      /> -->
     </div>
   </div>
 </template>
@@ -91,16 +78,13 @@ const dailyPlanRef = ref(null);
 
 const token = localStorage.getItem("token");
 
-//會員動態頁面用
 const route = useRoute();
 const isFromTracker = computed(() => route.query.from === "tracker");
 
-//返回行程列表
 const goBack = () => {
   emit("back");
 };
 
-//取得行程資料
 const fetchTrip = async () => {
   try {
     const res = await axios.get(
@@ -128,7 +112,6 @@ watch(
   },
 );
 
-//更新送到後端
 const updateCover = async (blob) => {
   const formData = new FormData();
   formData.append("cover", blob);
@@ -216,15 +199,13 @@ watch(trip, (newTrip) => {
 
 function changeDay(index) {
   currentDayIndex.value = index;
-  emit("day-changed", index); // 通知父層 Travel.vue
+  emit("day-changed", index);
 }
 
 function refreshDailyPlan() {
-  // 呼叫 DailyPlan 的 refresh 方法
   dailyPlanRef.value?.refresh?.();
 }
 
-// 給父層或地圖強制刷新 DailyPlan 用
 defineExpose({
   refreshDailyPlan,
   dailyPlanRef,

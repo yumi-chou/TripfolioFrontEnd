@@ -6,7 +6,6 @@
           <h5>會員中心</h5>
         </header>
 
-        <!-- 使用者頭像與名稱 -->
         <section class="user-info  ">
           <img :src="user.avatar + '?t=' + avatarTimestamp" alt="使用者頭像" class="avatar" />
           <div>
@@ -24,7 +23,6 @@
           </div>       
         </section>
 
-        <!-- Tab 切換 -->
         <div class="tabs">
           <button
             v-for="tab in tabs"
@@ -36,7 +34,6 @@
           </button>
         </div>
 
-        <!-- 各分頁內容 -->
         <section class="tab-content">
           <template v-if="activeTab === 'travels'">
             <CardGrid :items="travels" @click-card="goToTravel" />
@@ -53,7 +50,6 @@
         </section>
       </main>
 
-      <!-- 彈出視窗 -->
       <div
         v-if="showMemberProfile"
         class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
